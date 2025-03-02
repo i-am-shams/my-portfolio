@@ -1,114 +1,143 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Layout from "../components/Layout";
+import Section from "../components/Section";
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Layout>
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <Section title="About Me">
+          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+            I’ve loved coding from the moment I wrote my very first &quot;Hello
+            World&quot; program in C. It gives me a sense of creativity and
+            discovery—the thrill of building something new, solving problems,
+            and bringing ideas to life. For me, software engineering is more
+            than a career; it’s a dynamic field where imagination meets
+            innovation. Here, I can explore cutting-edge technologies,
+            experiment with endless possibilities, and grow in an ever-evolving
+            landscape. That constant blend of learning, creativity, and
+            technical challenge is why software engineering isn’t just my
+            profession—it’s my passion.
+          </p>
+          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+            Beyond my professional life, I cherish my roles as a devoted
+            husband, a loving father, and a caring son. My family inspires me to
+            grow not just as a technologist, but as a person who values
+            connection, empathy, and balance in all aspects of life.
+          </p>
+        </Section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <Section title="Area of Strengths">
+          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+            With a unique blend of technical expertise and collaborative spirit,
+            I bring exceptional analytical capabilities to deconstruct complex
+            challenges into actionable, data-driven solutions. My proficiency in
+            modern web architectures enables me to design and implement scalable
+            systems using cutting-edge technologies, while my strong
+            communication skills allow me to bridge technical and business
+            perspectives – whether articulating system designs to developers or
+            explaining technical constraints to stakeholders. As an adaptable
+            learner, I thrive in evolving tech landscapes, rapidly mastering any
+            new frameworks. My experience collaborating with cross-functional
+            teams across 15+ international projects has honed my ability to
+            synergize diverse perspectives, driving innovation through cultural,
+            educational, and professional diversity.
+          </p>
+        </Section>
+
+        <Section title="Featured Projects">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+            {/* <div className="text-xl font-semibold mb-2 text-gray-800 dark:text-white"> */}
+            <h3 className="text-2xl font-semibold mb-2 text-gray-800 dark:text-white">
+              CWASA Digital Transformation Suite
+            </h3>
+            <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+              <span className="role">Project Lead</span>
+            </h3>
+            {/* </div> */}
+            <div className="project-content">
+              <div className="project-overview">
+                <div className="box-border">
+                  <ul className="solution-list">
+                    <li>
+                      <strong>Automated Billing System:</strong> Streamlined
+                      billing/payment processing for 100k+ users with React
+                      Web/Kotlin Android interfaces
+                    </li>
+                    <li>
+                      <strong>NRW Tool:</strong> calculating water loss through
+                      SCADA integration
+                    </li>
+                    <li>
+                      <strong>Management Dashboard:</strong> Real-time
+                      operational insights with predictive analytics
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="tech-stack">
+                <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+                  Technical Architecture:
+                </h3>
+                <div className="tech-tags">
+                  <span className="tag">ASP.NET Core</span>
+                  <span className="tag">Microservices</span>
+                  <span className="tag">Azure/AWS</span>
+                  <span className="tag">Ocelot API Gateway</span>
+                  <span className="tag">React + Kotlin</span>
+                  <span className="tag">SCADA (IoT)</span>
+                </div>
+              </div>
+
+              <div className="key-achievements">
+                <h3>Key Results:</h3>
+                <ul className="achievement-list">
+                  <li>Architected system handling 1M+ monthly transactions</li>
+                  <li>65% reduction in manual reporting time</li>
+                  <li>Led 30+ member cross-functional team</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Project 1 */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+                ERP Solution
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Design & develop Inventory, Accounts, Payroll, HR web module
+                which is used by Eastern Refinery LTD (a subsidiary of
+                Bangladesh Petroleum Corporation).
+              </p>
+              {/* <a
+                href="https://github.com/yourusername/ecommerce"
+                className="text-blue-500 hover:underline"
+                target="_blank"
+              >
+                View on GitHub →
+              </a> */}
+            </div>
+
+            {/* Project 2 */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+                Portfolio Website
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                This very site built with Next.js and Tailwind CSS.
+              </p>
+              <a
+                href="https://github.com/yourusername/portfolio"
+                className="text-blue-500 hover:underline"
+                target="_blank"
+              >
+                View on GitHub →
+              </a>
+            </div>
+          </div>
+        </Section>
+      </div>
+    </Layout>
   );
 }

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 @theme {
   --font-sans: var(--font-geist-sans);
@@ -21,4 +22,64 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+/* Custom CSS */
+body {
+  transition-property: background-color, color;
+  transition-duration: 300ms;
+}
+.featured-projects {
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+.project-card {
+  /* background: #fff; */
+  border-radius: 12px;
+  /* box-shadow: 0 4px 6px rgba(0,0,0,0.1); */
+  padding: 2rem;
+}
+
+.project-header h2 {
+  /* color: #2d3748; */
+  margin-bottom: 0.5rem;
+}
+
+.project-meta {
+  display: flex;
+  gap: 1rem;
+  /*color: #718096; */
+  margin-bottom: 1.5rem;
+}
+
+.solution-list li {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tag {
+  /* background: #e2e8f0; */
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.achievement-list {
+  list-style-type: circle;
+  padding-left: 1.5rem;
+}
+
+.nda-notice {
+  /* color: #718096; */
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
 }
