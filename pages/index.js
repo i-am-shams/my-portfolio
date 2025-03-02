@@ -128,7 +128,7 @@ export default function Home() {
                 This very site built with Next.js and Tailwind CSS.
               </p>
               <a
-                href="https://github.com/yourusername/portfolio"
+                href="https://github.com/i-am-shams/my-portfolio"
                 className="text-blue-500 hover:underline"
                 target="_blank"
               >
