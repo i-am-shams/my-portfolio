@@ -1,0 +1,186 @@
+{
+  "personalInfo": {
+    "name": "KHALID SHAMS",
+    "title": "Software Developer",
+    "address": "House # 22, Flat # I-4, Road # 01, Queens Garden, Nurerchala, Vatara, Dhaka - 1212",
+    "phone": "01674592829",
+    "email": "i.am.shams@gmail.com",
+    "photo": "/avatar.png"
+  },
+  "careerObjective": "To demonstrate my expertise as a skilled IT specialist within a dynamic and demanding professional setting while continuously expanding my technical capabilities and practical knowledge.",
+  "experience": [
+    {
+      "position": "Technical Project Manager",
+      "company": "BJIT LTD",
+      "duration": "Oct 2016 - Present",
+      "responsibilities": [
+        "Managed software development projects from inception to delivery",
+        "Led a team of 30 developers and QA engineers",
+        "Coordinated with clients to gather requirements and provide updates",
+        "Developed and maintained project plans, schedules, and budgets",
+        "Ensured timely delivery of projects within budget and scope",
+        "Conducted code reviews and provided technical guidance to team members",
+        "Designed & developed PDF creation software similar to Adobe Acrobat",
+        "Created content creation tools for educators",
+        "Developed bridge inspection management systems"
+      ]
+    },
+    {
+      "position": "Software Engineer",
+      "company": "Intelligent Image Management Inc.",
+      "duration": "Jun 2015 - Oct 2016",
+      "responsibilities": [
+        "Implemented OCR solutions using Tesseract OCR engine",
+        "Developed image processing algorithms for data extraction",
+        "Optimized data capture accuracy from various image formats"
+      ]
+    },
+    {
+      "position": "Software Engineer",
+      "company": "Simplexhub Ltd",
+      "duration": "Aug 2013 - Jun 2015",
+      "responsibilities": [
+        "Developed e-commerce platforms with integrated payment gateways",
+        "Created medical service management solutions",
+        "Implemented secure transaction processing systems"
+      ]
+    },
+    {
+      "position": "Software Engineer",
+      "company": "LEADS Corporation LTD",
+      "duration": "Jul 2012 - Aug 2013",
+      "responsibilities": [
+        "Developed financial analytics tools for stock market",
+        "Implemented real-time data processing systems",
+        "Created predictive algorithms for market trends"
+      ]
+    },
+    {
+      "position": "Lab Technical Officer",
+      "company": "BRAC University",
+      "duration": "Jan 2012 - Jul 2012",
+      "responsibilities": [
+        "Supported academic programming labs and workshops",
+        "Maintained network infrastructure and server systems",
+        "Provided technical guidance to students and faculty"
+      ]
+    },
+    {
+      "position": "Programmer (Dot Net)",
+      "company": "CACTS LTD",
+      "duration": "Apr 2010 - Dec 2011",
+      "responsibilities": [
+        "Developed core ERP modules from scratch",
+        "Implemented inventory management systems",
+        "Created HR and payroll management solutions"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "BRAC University",
+      "year": null
+    },
+    {
+      "degree": "Higher Secondary Certificate (HSC)",
+      "institution": "Rangpur Govt. College",
+      "year": null
+    },
+    {
+      "degree": "Secondary School Certificate (SSC)",
+      "institution": "Cantonment Public School & College, Rangpur",
+      "year": null
+    }
+  ],
+
+  "technicalSkills": [
+    {
+      "category": "Programming Languages & Frameworks",
+      "items": [
+        "ASP.NET",
+        "ASP.NET Core",
+        "ASP Identity",
+        "C#",
+        "MVC",
+        "ADO.NET",
+        "Node.js",
+        "WCF",
+        "JavaScript/ES6",
+        "jQuery",
+        "TypeScript",
+        "HTML5",
+        "CSS3",
+        "Bootstrap",
+        "XML", 
+        "Orchard CMS"
+      ]
+    },
+    {
+      "category": "Frontend Libraries & Frameworks",
+      "items": ["Angular", "React.js", "Next.js", "Material-UI"]
+    },
+    {
+      "category": "ORM Tools",
+      "items": ["Entity Framework", "Dapper", "NHibernate"]
+    },
+    {
+      "category": "Databases",
+      "items": ["MS SQL Server", "Oracle", "MySQL", "MongoDB"]
+    },
+    {
+      "category": "Testing & Debugging",
+      "items": ["MSTest", "NUnit", "Postman", "Fiddler", "Firebug"]
+    },
+    {
+      "category": "Architecture & Patterns",
+      "items": [
+        "RESTful API",
+        "SOAP",
+        "Web API",
+        "Singleton",
+        "Factory",
+        "Repository",
+        "Microservices",
+        "Clean Architecture"
+      ]
+    },
+    {
+      "category": "DevOps & Tools",
+      "items": [
+        "Git",
+        "TFS",
+        "SVN",
+        "Azure DevOps",
+        "Docker",
+        "Jenkins",
+        "NPM",
+        "Webpack"
+      ]
+    },
+    {
+      "category": "Cloud & Services",
+      "items": ["Azure Services", "AWS Lambda", "Serverless Architecture"]
+    }
+  ],
+  "management": ["Project Planning", "Team Leadership", "Client Communication"],
+  "certifications": [
+    {
+      "name": "Certified ScrumMaster®",
+      "issuer": "SCRUM ALLIANCE®",
+      "validity": "Dec 2023 - Dec 2025"
+    }
+  ],
+  "languages": [
+    { "language": "Bengali", "proficiency": "Native" },
+    { "language": "English", "proficiency": "Fluent" }
+  ],
+  "references": [
+    {
+      "name": "KHALILUR RHAMAN (PhD)",
+      "position": "Professor",
+      "organization": "BRAC University",
+      "contact": "+88-01727 135372"
+    }
+  ]
+}
