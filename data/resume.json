@@ -138,7 +138,7 @@
     },
     {
       "category": "Frontend Libraries & Frameworks",
-      "items": ["Angular", "React.js", "Next.js", "Material-UI"]
+      "items": ["Angular", "React.js", "Next.js", "Material-UI", "Blazor"]
     },
     {
       "category": "ORM Tools",
