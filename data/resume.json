@@ -10,9 +10,19 @@
   "careerObjective": "To demonstrate my expertise as a skilled IT specialist within a dynamic and demanding professional setting while continuously expanding my technical capabilities and practical knowledge.",
   "experience": [
     {
+      "position": "Solution Delivery Specialist",
+      "company": "Today's Tech",
+      "companyUrl": "https://todaystech.us/",
+      "duration": "Apr 2025 - Present",
+      "responsibilities": [
+        "Leading end-to-end solution delivery across discovery, implementation, and release planning",
+        "Coordinating cross-functional stakeholders to ensure predictable, high-quality delivery outcomes"
+      ]
+    },
+    {
       "position": "Technical Project Manager",
       "company": "BJIT LTD",
-      "duration": "Oct 2016 - Present",
+      "duration": "Oct 2016 - Mar 2025",
       "responsibilities": [
         "Managed software development projects from inception to delivery",
         "Led a team of 30 developers and QA engineers",

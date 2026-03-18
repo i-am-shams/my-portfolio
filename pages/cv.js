@@ -2,9 +2,9 @@
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import SkillCategory from '../components/SkillCategory';
+import Image from 'next/image';
 import resumeData from '../data/resume.json';
-import { BriefcaseIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
-import { CubeIcon } from '@heroicons/react/24/outline';
+import { BriefcaseIcon, AcademicCapIcon, CubeIcon } from '@heroicons/react/24/outline';
 
 export default function CV() {
   return (
@@ -12,10 +12,12 @@ export default function CV() {
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         {/* Personal Info Header */}
         <div className="text-center mb-12">
-          <img
+          <Image
             src={resumeData.personalInfo.photo}
             alt={resumeData.personalInfo.name}
-            className="h-32 rounded-full mx-auto mb-6"
+            width={128}
+            height={128}
+            className="h-32 w-32 rounded-full object-cover mx-auto mb-6"
           />
           <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
             {resumeData.personalInfo.name}
@@ -45,7 +47,19 @@ export default function CV() {
                     {exp.position}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-2">
-                    {exp.company} • {exp.duration}
+                    {exp.companyUrl ? (
+                      <a
+                        href={exp.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        {exp.company}
+                      </a>
+                    ) : (
+                      <span>{exp.company}</span>
+                    )}{" "}
+                    • {exp.duration}
                   </p>
                   <ul className="list-disc list-inside space-y-2">
                     {exp.responsibilities.map((resp, i) => (
@@ -87,7 +101,7 @@ export default function CV() {
             <div>
               <h3 className="text-xl font-semibold">{edu.degree}</h3>
               <p>{edu.institution}</p>
-              <p>{edu.year}</p>
+              {edu.year ? <p>{edu.year}</p> : null}
             </div>
           </div>
         ))}

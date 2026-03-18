@@ -131,6 +131,7 @@ export default function Home() {
                 href="https://github.com/i-am-shams/my-portfolio"
                 className="text-blue-500 hover:underline"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 View on GitHub →
               </a>
