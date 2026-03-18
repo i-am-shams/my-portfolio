@@ -1,7 +1,7 @@
 {
   "personalInfo": {
     "name": "KHALID SHAMS",
-    "title": "Software Developer",
+    "title": "Solution Delivery Specialist",
     "address": "House # 22, Flat # I-4, Road # 01, Queens Garden, Nurerchala, Vatara, Dhaka - 1212",
     "phone": "01674592829",
     "email": "i.am.shams@gmail.com",
@@ -15,13 +15,19 @@
       "companyUrl": "https://todaystech.us/",
       "duration": "Apr 2025 - Present",
       "responsibilities": [
-        "Leading end-to-end solution delivery across discovery, implementation, and release planning",
-        "Coordinating cross-functional stakeholders to ensure predictable, high-quality delivery outcomes"
+        "Lead end-to-end solution delivery from discovery and estimation to implementation and production release",
+        "Translate business goals into actionable technical roadmaps, milestones, and measurable delivery outcomes",
+        "Coordinate cross-functional teams across product, engineering, QA, and operations to keep delivery on track",
+        "Own sprint planning, backlog prioritization, and dependency management for predictable execution",
+        "Establish delivery governance with risk tracking, quality gates, and proactive mitigation plans",
+        "Drive stakeholder communication through regular status reporting, demos, and expectation alignment",
+        "Support continuous improvement by refining delivery processes, team collaboration, and release readiness"
       ]
     },
     {
       "position": "Technical Project Manager",
       "company": "BJIT LTD",
+      "companyUrl": "https://bjitgroup.com/",
       "duration": "Oct 2016 - Mar 2025",
       "responsibilities": [
         "Managed software development projects from inception to delivery",
@@ -38,6 +44,7 @@
     {
       "position": "Software Engineer",
       "company": "Intelligent Image Management Inc.",
+      "companyUrl": "https://www.iimdirect.com/",
       "duration": "Jun 2015 - Oct 2016",
       "responsibilities": [
         "Implemented OCR solutions using Tesseract OCR engine",
@@ -48,6 +55,7 @@
     {
       "position": "Software Engineer",
       "company": "Simplexhub Ltd",
+      "companyUrl": "https://www.simplexhub.com/",
       "duration": "Aug 2013 - Jun 2015",
       "responsibilities": [
         "Developed e-commerce platforms with integrated payment gateways",
@@ -58,6 +66,7 @@
     {
       "position": "Software Engineer",
       "company": "LEADS Corporation LTD",
+      "companyUrl": "https://leads.com.bd/",
       "duration": "Jul 2012 - Aug 2013",
       "responsibilities": [
         "Developed financial analytics tools for stock market",
@@ -68,6 +77,7 @@
     {
       "position": "Lab Technical Officer",
       "company": "BRAC University",
+      "companyUrl": "https://www.bracu.ac.bd/",
       "duration": "Jan 2012 - Jul 2012",
       "responsibilities": [
         "Supported academic programming labs and workshops",
