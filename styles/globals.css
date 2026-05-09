@@ -2,83 +2,80 @@
 @tailwind utilities;
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #020617;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #020617;
+  --foreground: #f8fafc;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
-/* Custom CSS */
+
 body {
   transition-property: background-color, color;
   transition-duration: 300ms;
 }
-.featured-projects {
-  max-width: 1200px;
-  margin: 2rem auto;
+
+::selection {
+  background: #bfdbfe;
+  color: #0f172a;
 }
 
-.project-card {
-  /* background: #fff; */
-  border-radius: 12px;
-  /* box-shadow: 0 4px 6px rgba(0,0,0,0.1); */
-  padding: 2rem;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-.project-header h2 {
-  /* color: #2d3748; */
-  margin-bottom: 0.5rem;
-}
+@media print {
+  @page {
+    margin: 16mm;
+  }
 
-.project-meta {
-  display: flex;
-  gap: 1rem;
-  /*color: #718096; */
-  margin-bottom: 1.5rem;
-}
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt;
+  }
 
-.solution-list li {
-  margin-bottom: 0.8rem;
-  line-height: 1.6;
-}
+  nav,
+  footer {
+    display: none !important;
+  }
 
-.tech-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
+  main {
+    max-width: none !important;
+    padding: 0 !important;
+  }
 
-.tag {
-  /* background: #e2e8f0; */
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
+  section {
+    break-inside: avoid;
+    margin-bottom: 18pt !important;
+  }
 
-.achievement-list {
-  list-style-type: circle;
-  padding-left: 1.5rem;
-}
-
-.nda-notice {
-  /* color: #718096; */
-  font-size: 0.9rem;
-  margin-top: 1.5rem;
-  border-top: 1px solid #e2e8f0;
-  padding-top: 1rem;
+  a {
+    color: #0f172a !important;
+    text-decoration: none !important;
+  }
 }

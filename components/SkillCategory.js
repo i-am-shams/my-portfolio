@@ -1,14 +1,14 @@
 export default function SkillCategory({ category, items }) {
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
-      <h3 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <h3 className="mb-4 text-xl font-semibold text-slate-950 dark:text-white">
         {category}
       </h3>
       <div className="flex flex-wrap gap-2">
         {items.map((skill, index) => (
           <span
             key={index}
-            className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full text-sm"
+            className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-200"
           >
             {skill}
           </span>

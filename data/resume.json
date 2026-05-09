@@ -1,13 +1,13 @@
 {
   "personalInfo": {
     "name": "KHALID SHAMS",
-    "title": "Solution Delivery Specialist",
+    "title": "Enterprise Software Engineering Leader",
     "address": "House # 22, Flat # I-4, Road # 01, Queens Garden, Nurerchala, Vatara, Dhaka - 1212",
     "phone": "01674592829",
     "email": "i.am.shams@gmail.com",
     "photo": "/avatar.png"
   },
-  "careerObjective": "To demonstrate my expertise as a skilled IT specialist within a dynamic and demanding professional setting while continuously expanding my technical capabilities and practical knowledge.",
+  "careerObjective": "Enterprise software engineering leader with 14+ years of experience designing, delivering, and modernizing business-critical systems across utilities, ERP, financial analytics, OCR, reporting, and operational management domains. Strong background in .NET, ASP.NET Core, React, Angular, SQL Server, REST APIs, microservices, Azure/AWS, SCADA integration, GIS integration, dashboards, and cross-functional technical leadership.",
   "experience": [
     {
       "position": "Solution Delivery Specialist",
@@ -15,13 +15,12 @@
       "companyUrl": "https://todaystech.us/",
       "duration": "Apr 2025 - Present",
       "responsibilities": [
-        "Lead end-to-end solution delivery from discovery and estimation to implementation and production release",
-        "Translate business goals into actionable technical roadmaps, milestones, and measurable delivery outcomes",
-        "Coordinate cross-functional teams across product, engineering, QA, and operations to keep delivery on track",
-        "Own sprint planning, backlog prioritization, and dependency management for predictable execution",
-        "Establish delivery governance with risk tracking, quality gates, and proactive mitigation plans",
-        "Drive stakeholder communication through regular status reporting, demos, and expectation alignment",
-        "Support continuous improvement by refining delivery processes, team collaboration, and release readiness"
+        "Lead end-to-end solution delivery from discovery and estimation through architecture alignment, implementation, quality gates, and production release",
+        "Translate business goals into technical roadmaps, milestones, release plans, and measurable delivery outcomes",
+        "Coordinate product, engineering, QA, and operations teams to keep enterprise delivery predictable and transparent",
+        "Own sprint planning, backlog prioritization, dependency management, delivery risks, and release readiness",
+        "Establish delivery governance through status reporting, stakeholder demos, risk tracking, and proactive mitigation",
+        "Support continuous improvement across delivery process, team collaboration, engineering quality, and operational handoff"
       ]
     },
     {
@@ -30,15 +29,13 @@
       "companyUrl": "https://bjitgroup.com/",
       "duration": "Oct 2016 - Mar 2025",
       "responsibilities": [
-        "Managed software development projects from inception to delivery",
-        "Led a team of 30 developers and QA engineers",
-        "Coordinated with clients to gather requirements and provide updates",
-        "Developed and maintained project plans, schedules, and budgets",
-        "Ensured timely delivery of projects within budget and scope",
-        "Conducted code reviews and provided technical guidance to team members",
-        "Designed & developed PDF creation software similar to Adobe Acrobat",
-        "Created content creation tools for educators",
-        "Developed bridge inspection management systems"
+        "Led enterprise software delivery across utility, reporting, analytics, content-creation, and operational management domains",
+        "Led a 30+ member cross-functional team of developers and QA engineers across planning, implementation, review, and release",
+        "Served as project lead for the CWASA Digital Ecosystem covering billing, NRW analysis, management dashboards, predictive analytics, SCADA integration, GIS integration, and reporting workflows",
+        "Architected and delivered systems supporting 100k+ users, 1M+ monthly transactions, and a 65% reduction in manual reporting effort",
+        "Coordinated with clients and business stakeholders to convert operational requirements into roadmaps, technical scope, and release plans",
+        "Conducted architecture reviews, code reviews, implementation guidance, dependency management, and production-readiness planning",
+        "Designed and developed PDF creation software, educator content tools, and bridge inspection management systems"
       ]
     },
     {
@@ -47,9 +44,9 @@
       "companyUrl": "https://www.iimdirect.com/",
       "duration": "Jun 2015 - Oct 2016",
       "responsibilities": [
-        "Implemented OCR solutions using Tesseract OCR engine",
-        "Developed image processing algorithms for data extraction",
-        "Optimized data capture accuracy from various image formats"
+        "Implemented OCR and intelligent data-capture solutions using the Tesseract OCR engine",
+        "Developed image-processing and extraction workflows for scanned documents and image-based inputs",
+        "Improved structured data capture accuracy and reduced friction in document digitization workflows"
       ]
     },
     {
@@ -58,9 +55,9 @@
       "companyUrl": "https://www.simplexhub.com/",
       "duration": "Aug 2013 - Jun 2015",
       "responsibilities": [
-        "Developed e-commerce platforms with integrated payment gateways",
-        "Created medical service management solutions",
-        "Implemented secure transaction processing systems"
+        "Developed e-commerce platforms with integrated payment gateways and secure transaction workflows",
+        "Created medical service management solutions for structured operational processes",
+        "Implemented backend services, web interfaces, and data workflows for business-facing applications"
       ]
     },
     {
@@ -69,9 +66,9 @@
       "companyUrl": "https://leads.com.bd/",
       "duration": "Jul 2012 - Aug 2013",
       "responsibilities": [
-        "Developed financial analytics tools for stock market",
-        "Implemented real-time data processing systems",
-        "Created predictive algorithms for market trends"
+        "Developed financial analytics tools for stock-market-oriented data analysis",
+        "Implemented real-time data-processing workflows for time-sensitive financial signals",
+        "Created predictive logic and analytical features for market-trend decision support"
       ]
     },
     {
@@ -90,9 +87,9 @@
       "company": "CACTS LTD",
       "duration": "Apr 2010 - Dec 2011",
       "responsibilities": [
-        "Developed core ERP modules from scratch",
-        "Implemented inventory management systems",
-        "Created HR and payroll management solutions"
+        "Developed core ERP modules from scratch across inventory, HR, payroll, and administrative workflows",
+        "Implemented relational database-backed business processes for enterprise operations",
+        "Created reporting-oriented modules that improved internal workflow visibility and process control"
       ]
     }
   ],
