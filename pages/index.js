@@ -3,6 +3,8 @@ import Link from "next/link";
 import JsonLd from "../components/JsonLd";
 import Layout from "../components/Layout";
 import Section from "../components/Section";
+import BuildProject from "../components/BuildProject";
+import { buildProjects } from "../data/buildProjects";
 import { absoluteUrl, personJsonLd, siteProfile, websiteJsonLd } from "../data/profile";
 
 const proofMetrics = [
@@ -132,6 +134,12 @@ export default function Home() {
                   className="inline-flex items-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-100"
                 >
                   View Enterprise Case Study
+                </a>
+                <a
+                  href="#engineering"
+                  className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-600 dark:text-slate-100 dark:hover:border-blue-300 dark:hover:text-blue-200"
+                >
+                  See a System I Built
                 </a>
                 <a
                   href={siteProfile.resume}
@@ -300,6 +308,19 @@ export default function Home() {
                   ))}
                 </div>
               </article>
+            </Section>
+          </div>
+
+          <div id="engineering">
+            <Section title="Engineering Deep Dive">
+              <p className="max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
+                Enterprise delivery is one kind of evidence; a system you can open in a
+                browser is another. This one is designed, built, deployed and operated
+                end to end, and is running in production right now.
+              </p>
+              {buildProjects.map((project) => (
+                <BuildProject key={project.slug} project={project} />
+              ))}
             </Section>
           </div>
 
