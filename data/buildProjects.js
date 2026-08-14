@@ -17,11 +17,17 @@ export const buildProjects = [
     demo: {
       url: "https://demo.dentflowbd.com/login",
       // Set both of these to strings to render the credentials block.
-      username: null,
-      password: null,
+      username: "demo.dentflowbd@gmail.com",
+      password: "Demo@123",
       note: "Seeded demo clinic. No real patient data.",
     },
-    diagram: null,
+    diagram: {
+      src: "/dentalpms-dashboard.png",
+      alt:
+        "The DentalPMS clinic admin dashboard, logged in as a demo clinic: today's appointments, month-to-date collections and charges, outstanding dues, active treatment cycles, new patients in the last 30 days, and flagged operational signals such as collection efficiency and no-show pressure.",
+      caption:
+        "The clinic admin dashboard, live on the demo tenant - real operational signals (collections, dues aging, no-show pressure) computed from the seeded data, not a mockup.",
+    },
     stats: [
       { value: "127k", label: "Lines of C#" },
       { value: "41", label: "Domain entities" },
@@ -97,6 +103,8 @@ export const buildProjects = [
       src: "/jobcopilot-architecture.png",
       alt:
         "Architecture diagram: a React frontend calls an ASP.NET Core API, which publishes match requests to RabbitMQ; a background worker consumes them, calls the Gemini API, writes results to PostgreSQL, and publishes a completion event that the API pushes back to the browser over SignalR.",
+      caption:
+        "Request flow: the API queues work rather than calling the model inline, and the result is pushed back to the browser when the worker finishes.",
     },
     summary:
       "Paste a resume and a job description, get an AI-generated match score and gap analysis. The interesting part is not the AI call - it is that the work happens asynchronously through a message queue and a background worker, with the result pushed back to the browser in real time rather than polled for.",

@@ -88,8 +88,7 @@ export default function BuildProject({ project }) {
             className="h-auto w-full rounded-2xl border border-slate-200 bg-white dark:border-slate-700"
           />
           <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-            Request flow: the API queues work rather than calling the model inline, and the
-            result is pushed back to the browser when the worker finishes.
+            {project.diagram.caption}
           </figcaption>
         </figure>
       )}
