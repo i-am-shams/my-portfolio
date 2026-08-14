@@ -2,7 +2,6 @@
   "personalInfo": {
     "name": "KHALID SHAMS",
     "title": "Enterprise Software Engineering Leader",
-    "address": "House # 22, Flat # I-4, Road # 01, Queens Garden, Nurerchala, Vatara, Dhaka - 1212",
     "phone": "01674592829",
     "email": "i.am.shams@gmail.com",
     "photo": "/avatar.png"
@@ -52,7 +51,7 @@
     {
       "position": "Software Engineer",
       "company": "Simplexhub Ltd",
-      "companyUrl": "https://www.simplexhub.com/",
+      "companyUrl": null,
       "duration": "Aug 2013 - Jun 2015",
       "responsibilities": [
         "Developed e-commerce platforms with integrated payment gateways and secure transaction workflows",
@@ -155,14 +154,6 @@
   ],
   "languages": [
     { "language": "Bengali", "proficiency": "Native" },
-    { "language": "English", "proficiency": "Fluent" }
-  ],
-  "references": [
-    {
-      "name": "KHALILUR RHAMAN (PhD)",
-      "position": "Professor",
-      "organization": "BRAC University",
-      "contact": "+88-01727 135372"
-    }
+     { "language": "English", "proficiency": "Fluent" }
   ]
 }

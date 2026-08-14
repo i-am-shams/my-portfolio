@@ -85,14 +85,14 @@ export default function CV() {
       <Layout>
         <main className="container mx-auto max-w-6xl px-4 py-12">
           <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-10 print:border-0 print:p-0 print:shadow-none">
-            <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
+            <div className="grid gap-8 print:gap-4 md:grid-cols-[auto_1fr] md:items-center print:grid-cols-[auto_1fr] print:items-center">
               <Image
                 src={resumeData.personalInfo.photo}
                 alt={resumeData.personalInfo.name}
                 width={144}
                 height={144}
                 priority
-                className="h-36 w-36 rounded-2xl object-cover shadow-sm"
+                className="h-36 w-36 rounded-2xl object-cover shadow-sm print:h-20 print:w-20 print:shadow-none"
               />
               <div>
                 <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-blue-700 dark:text-blue-300">
@@ -140,12 +140,12 @@ export default function CV() {
 
           <section
             aria-label="Resume proof points"
-            className="my-8 grid gap-4 md:grid-cols-5"
+            className="my-8 print:my-3 grid gap-4 print:gap-2 md:grid-cols-5 print:grid-cols-5"
           >
             {proofMetrics.map((metric) => (
               <div
                 key={metric}
-                className="rounded-2xl border border-slate-200 bg-white p-5 text-sm font-semibold leading-6 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                className="rounded-2xl border border-slate-200 bg-white p-5 text-sm font-semibold leading-6 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
               >
                 {metric}
               </div>
@@ -157,7 +157,7 @@ export default function CV() {
               {roleTargets.map((role) => (
                 <span
                   key={role}
-                  className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800 dark:bg-blue-950 dark:text-blue-200"
+                  className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800 dark:bg-blue-950 dark:text-blue-200 print:rounded-none print:bg-transparent print:px-0 print:py-0 print:text-xs print:font-normal"
                 >
                   {role}
                 </span>
@@ -166,11 +166,11 @@ export default function CV() {
           </Section>
 
           <Section title="Enterprise Domains">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 print:gap-2 md:grid-cols-3 print:grid-cols-3">
               {enterpriseDomains.map((domain) => (
                 <div
                   key={domain}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 font-semibold text-slate-800 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                  className="rounded-2xl border border-slate-200 bg-white p-5 font-semibold text-slate-800 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
                 >
                   {domain}
                 </div>
@@ -179,11 +179,11 @@ export default function CV() {
           </Section>
 
           <Section title="Selected Projects">
-            <div className="space-y-6">
+            <div className="space-y-6 print:space-y-2">
               {selectedProjects.map((project) => (
                 <article
                   key={project.name}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
                 >
                   <h3 className="text-xl font-semibold text-slate-950 dark:text-white mb-3">
                     {project.name}
@@ -211,15 +211,15 @@ export default function CV() {
           </Section>
 
           <Section title="Professional Experience">
-            <div className="space-y-6">
+            <div className="space-y-6 print:space-y-2">
               {resumeData.experience.map((exp) => (
                 <article
                   key={`${exp.position}-${exp.company}-${exp.duration}`}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
                 >
                   <div className="mb-4 flex items-start gap-4">
                     <BriefcaseIcon
-                      className="mt-1 h-6 w-6 shrink-0 text-blue-700 dark:text-blue-300"
+                      className="mt-1 h-6 w-6 shrink-0 text-blue-700 dark:text-blue-300 print:hidden"
                       aria-hidden="true"
                     />
                     <div>
@@ -243,7 +243,7 @@ export default function CV() {
                       </p>
                     </div>
                   </div>
-                  <ul className="ml-10 list-disc space-y-2 text-slate-600 dark:text-slate-300">
+                  <ul className="ml-10 list-disc space-y-2 text-slate-600 dark:text-slate-300 print:ml-4 print:space-y-0.5">
                     {exp.responsibilities.map((resp) => (
                       <li key={`${exp.company}-${resp}`} className="leading-7">
                         {resp}
@@ -256,7 +256,7 @@ export default function CV() {
           </Section>
 
           <Section title="Technical Proficiency">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 print:gap-2 md:grid-cols-2 print:grid-cols-2">
               {resumeData.technicalSkills.map((skillGroup) => (
                 <SkillCategory
                   key={skillGroup.category}
@@ -268,14 +268,14 @@ export default function CV() {
           </Section>
 
           <Section title="Education">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 print:gap-2 md:grid-cols-3 print:grid-cols-3">
               {resumeData.education.map((edu) => (
                 <article
                   key={edu.degree}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
                 >
                   <AcademicCapIcon
-                    className="mb-3 h-6 w-6 text-blue-700 dark:text-blue-300"
+                    className="mb-3 h-6 w-6 text-blue-700 dark:text-blue-300 print:hidden"
                     aria-hidden="true"
                   />
                   <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
@@ -291,14 +291,14 @@ export default function CV() {
           </Section>
 
           <Section title="Certifications">
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 print:gap-2 md:grid-cols-2 print:grid-cols-2">
               {resumeData.certifications.map((certification) => (
                 <article
                   key={certification.name}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
                 >
                   <CubeIcon
-                    className="mb-3 h-6 w-6 text-blue-700 dark:text-blue-300"
+                    className="mb-3 h-6 w-6 text-blue-700 dark:text-blue-300 print:hidden"
                     aria-hidden="true"
                   />
                   <h3 className="text-lg font-semibold text-slate-950 dark:text-white">

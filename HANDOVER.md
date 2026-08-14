@@ -116,6 +116,83 @@ plain-text resume alternative (`/resume.txt`) for ATS-style skimming, and a
 one-line "why no link" note on `enterpriseProjects` cards for parity with
 `sourceNote` on the build cards.
 
+## Session 3 — full site review, PII in the PDF, reorder, favicon
+
+Ran a structured review against first-impressions/case-study-depth/UX/
+action-items criteria, then acted on findings across several rounds.
+
+- **`data/resume.json`**: removed a home address and a third party's name
+  + personal phone number (a professor listed under `references`) that
+  were never rendered on the page but shipped in the public JS bundle
+  regardless — confirmed by grepping the built `.next/static` chunk before
+  and after. Also nulled `companyUrl` for the Simplexhub Ltd role — that
+  domain's TLS certificate no longer matches its hostname, so the link
+  threw a browser security warning; verified live with `curl` before
+  touching it.
+- **Homepage reorder**: Engineering Deep Dive now renders before Flagship
+  Case Study. Reasoning: the site's own experience history has an 8+ year
+  gap between the last "Software Engineer"-titled role (2016) and now — the
+  Deep Dive is the one section that answers "does this person still code?"
+  with something independently verifiable, so it shouldn't sit behind a
+  self-reported case study. This also fixed an existing inconsistency: the
+  hero's primary CTA already pointed at `#engineering` first, secondary at
+  `#case-study` — document order hadn't matched that until now.
+- **Closing CTA section rewritten**: copy no longer restates generic value
+  props ("hands-on engineering depth... stakeholder discipline") — it now
+  references the specific evidence already shown above it. "Download
+  Resume" button replaced with "View CV", since the PDF was the weaker,
+  staler artifact (see below) and the button was pointing at it from the
+  single most-visible spot on the page.
+- **Mobile nav**: the header's Contact button was `hidden` below the `sm`
+  breakpoint; now visible at all widths. Checked for overflow at both
+  390px and a narrow 320px viewport — name wraps, button row doesn't.
+- **The resume PDF was regenerated from scratch, not just re-exported.**
+  The old `public/Khalid_Shams_Resume.pdf` (last touched 2026-05-10) turned
+  out to be a *different resume entirely* — a banking/AML/data-warehouse-
+  framed CV, not the site's "Enterprise Software Engineering Leader"
+  positioning — and it exposed a home address (different from the one in
+  `resume.json`), plus date of birth, nationality, marital status, and
+  religion in a "Personal Details" block, none of which appears anywhere
+  else on the site. Confirmed by extracting its text with `pdftotext`, not
+  by assuming staleness from the file date. Replaced by printing the live
+  `/cv` page to PDF via Playwright (`page.pdf()`, print media, A4). First
+  raw export was 8 pages with several blank ones; root cause was that
+  `md:grid-cols-*` responsive grids need 768px width to activate, but the
+  actual PDF content area is only ~672px (A4 minus margins) — every
+  multi-column section was silently collapsing to one column. Added
+  `print:grid-cols-*` overrides (which apply unconditionally under
+  `@media print`, regardless of container width) plus density overrides
+  across `pages/cv.js`, `components/Section.js`, and
+  `components/SkillCategory.js`. Down to 6 pages (one of which is a nearly
+  content-free trailing page — a page-break artifact, not investigated
+  further). Getting to a literal 2-3 pages from here needs actual content
+  cuts, not more CSS — flagged to the user rather than done unasked.
+- **Favicon replaced.** The old one (`public/favicon.svg` /
+  `public/favicon.ico`, a 16-color 64×64 `.ico`) was a generic briefcase
+  icon with an unrelated heartbeat/EKG squiggle on it — a leftover
+  template asset with no connection to the site's actual owner. New one is
+  a bold "KS" monogram on the same gradient already used elsewhere on the
+  site (`#0f172a` → `#1d4ed8`), so it's on-brand rather than generic.
+  `favicon.ico` was hand-built as a proper multi-resolution ICO (16/32/48px,
+  PNG-embedded RGBA) since no image tooling (ImageMagick, etc.) was
+  available in this environment — verified by extracting each size back
+  out of the finished `.ico` and viewing it, and by checking legibility of
+  the 16px render specifically (the hardest size), not just the large
+  preview. Cache-busting query bumped `?v=2` → `?v=3` in `pages/_document.js`
+  so browsers don't keep serving the old cached icon.
+
+All of the above verified the same way as session 2: full diffs read
+before trusting Copilot's own summary (one round caught a mid-edit mistake
+it had already self-corrected but left cosmetic whitespace behind; another
+caught the exact same thing) — plus `npm run build`, `npm run lint`, and
+the full Playwright smoke suite passing after every batch, not just the
+last one.
+
+Two Copilot Haiku calls this session (batched, one per logical spec): the
+homepage/resume.json/mobile-nav batch, and the print-density batch.
+0.66 premium requests combined, versus an estimated 12 for the same scope
+done directly.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
@@ -147,6 +224,8 @@ one-line "why no link" note on `enterpriseProjects` cards for parity with
 | Header/footer links, dark mode | `components/Layout.js` |
 | Name, email, GitHub/LinkedIn URLs, SEO metadata | `data/profile.js` |
 | Smoke-test coverage | `portfolio-smoke.spec.js` |
+| Resume PDF content | Not hand-edited — regenerated from `pages/cv.js` (see `print:` overrides in that file, `components/Section.js`, `components/SkillCategory.js`, and the `@media print` block in `styles/globals.css`). Change the CV page, then re-export. |
+| Favicon | `public/favicon.svg` (source of truth) + `public/favicon.ico` (hand-built multi-res fallback) + cache-busting version in `pages/_document.js` |
 
 ## Open items — genuinely unfinished, not padding
 
@@ -158,13 +237,17 @@ one-line "why no link" note on `enterpriseProjects` cards for parity with
   Job-Search Copilot repo is a candidate to make public — if/when that
   happens, setting this one field surfaces the "Source" button, nothing else
   needs to change.
-- **The demo panel publishes a real password in plaintext on a public page.**
-  That was the explicit ask (maximum conversion — an interviewer clicks
-  straight through), and the tenant is seeded/isolated with no real patient
-  data. But a public plaintext credential on a page search engines will
-  index *will* get found by bots within days, not months. Worth a look at
-  whether that specific login path has rate limiting / lockout independent
-  of this being "just a demo" — not verified this session.
+- **The demo panel's password is now gated behind a "click to reveal"
+  button** (fixed in commit `eef244f`, prior session) rather than sitting
+  in the static HTML — closes the search-engine-indexing exposure. What's
+  still genuinely unverified: whether that login path has rate limiting /
+  lockout independent of this being "just a demo."
+- **The regenerated resume PDF is 6 pages** (down from a raw 8-page export;
+  root cause and fix are in the Session 3 notes above). Getting it to a
+  conventional 2-3 pages needs actual content cuts — fewer bullets on
+  older roles, likely dropping some CV-page sections from the print
+  version entirely — which is a content decision, not further CSS work.
+  Deliberately not done without being asked.
 - **No accessibility audit beyond the elements this session touched.** The
   new sections were built with explicit ARIA/contrast/focus-ring asks in
   their specs and were checked for those. The pre-existing template markup

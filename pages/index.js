@@ -236,6 +236,17 @@ export default function Home() {
             </div>
           </Section>
 
+          <div id="engineering">
+            <Section title="Engineering Deep Dive">
+              <p className="max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
+                Enterprise delivery is one kind of evidence; a system you can open in a browser is another. Both of these were designed, built, deployed, and operated end to end, and both are running in production right now.
+              </p>
+              {buildProjects.map((project) => (
+                <BuildProject key={project.slug} project={project} />
+              ))}
+            </Section>
+          </div>
+
           <div id="case-study">
             <Section title="Flagship Case Study">
               <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8">
@@ -324,17 +335,6 @@ export default function Home() {
             </Section>
           </div>
 
-          <div id="engineering">
-            <Section title="Engineering Deep Dive">
-              <p className="max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
-                Enterprise delivery is one kind of evidence; a system you can open in a browser is another. Both of these were designed, built, deployed, and operated end to end, and both are running in production right now.
-              </p>
-              {buildProjects.map((project) => (
-                <BuildProject key={project.slug} project={project} />
-              ))}
-            </Section>
-          </div>
-
           <Section title="Selected Enterprise Systems">
             <div className="grid gap-5 md:grid-cols-3">
               {enterpriseProjects.map((project) => (
@@ -399,12 +399,12 @@ export default function Home() {
               Recruiter and Hiring Manager CTA
             </p>
             <h2 className="mb-4 text-3xl font-bold">
-              Need someone who can own enterprise systems from architecture to production?
+              Need someone who can own a system like the ones above — from architecture to production?
             </h2>
             <p className="mb-6 max-w-3xl leading-7 text-slate-300 dark:text-slate-700">
-              I bring hands-on engineering depth, reporting and data-systems experience,
-              delivery leadership, and the stakeholder discipline required for
-              business-critical platforms.
+              DentalPMS and the AI Job-Search Copilot are running in production right now, and
+              the CWASA ecosystem supported 100k+ users under my leadership. If that&apos;s the
+              kind of ownership your team needs, let&apos;s talk.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -413,13 +413,12 @@ export default function Home() {
               >
                 Contact Khalid
               </a>
-              <a
-                href={siteProfile.resume}
-                download
+              <Link
+                href="/cv"
                 className="inline-flex rounded-xl border border-slate-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-blue-300 hover:text-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-400 dark:text-slate-950 dark:hover:border-blue-700 dark:hover:text-blue-700"
               >
-                Download Resume
-              </a>
+                View CV
+              </Link>
             </div>
           </section>
         </main>
