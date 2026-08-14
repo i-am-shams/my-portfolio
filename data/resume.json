@@ -113,71 +113,36 @@
 
   "technicalSkills": [
     {
-      "category": "Programming Languages & Frameworks",
-      "items": [
-        "ASP.NET",
-        "ASP.NET Core",
-        "ASP Identity",
-        "C#",
-        "MVC",
-        "ADO.NET",
-        "Node.js",
-        "WCF",
-        "JavaScript/ES6",
-        "jQuery",
-        "TypeScript",
-        "HTML5",
-        "CSS3",
-        "Bootstrap",
-        "XML", 
-        "Orchard CMS"
-      ]
+      "category": "Languages & Frameworks",
+      "items": ["C#", "ASP.NET Core", "ASP.NET", "Blazor Server", "MVC", "ADO.NET", "WCF", "Node.js", "TypeScript", "JavaScript/ES6", "HTML5", "CSS3"]
     },
     {
-      "category": "Frontend Libraries & Frameworks",
-      "items": ["Angular", "React.js", "Next.js", "Material-UI", "Blazor"]
+      "category": "Frontend",
+      "items": ["React.js", "Next.js", "Angular", "Blazor", "Tailwind CSS", "TanStack Query", "Material-UI", "Bootstrap", "jQuery"]
     },
     {
-      "category": "ORM Tools",
-      "items": ["Entity Framework", "Dapper", "NHibernate"]
+      "category": "Databases & ORM",
+      "items": ["PostgreSQL", "MS SQL Server", "Oracle", "MySQL", "MongoDB", "Entity Framework Core", "Entity Framework", "Dapper", "NHibernate"]
     },
     {
-      "category": "Databases",
-      "items": ["MS SQL Server", "Oracle", "MySQL", "MongoDB"]
-    },
-    {
-      "category": "Testing & Debugging",
-      "items": ["MSTest", "NUnit", "Postman", "Fiddler", "Firebug"]
+      "category": "Messaging & Real-Time",
+      "items": ["RabbitMQ", "SignalR", "Event-Driven Architecture", "Background Workers", "WebSockets"]
     },
     {
       "category": "Architecture & Patterns",
-      "items": [
-        "RESTful API",
-        "SOAP",
-        "Web API",
-        "Singleton",
-        "Factory",
-        "Repository",
-        "Microservices",
-        "Clean Architecture"
-      ]
+      "items": ["Clean Architecture", "Multi-Tenant SaaS", "Microservices", "RESTful API", "Web API", "SOAP", "Repository", "Factory", "Singleton"]
     },
     {
-      "category": "DevOps & Tools",
-      "items": [
-        "Git",
-        "TFS",
-        "SVN",
-        "Azure DevOps",
-        "Docker",
-        "Jenkins",
-        "NPM",
-        "Webpack"
-      ]
+      "category": "Testing & Quality",
+      "items": ["xUnit", "NUnit", "MSTest", "Playwright", "Vitest", "React Testing Library", "Postman", "Fiddler"]
+    },
+    {
+      "category": "DevOps & Infrastructure",
+      "items": ["Docker", "Docker Compose", "GitHub Actions", "Azure DevOps", "Jenkins", "nginx", "Linux VPS Operations", "Let's Encrypt / TLS", "Git", "TFS", "SVN", "NPM", "Webpack"]
     },
     {
       "category": "Cloud & Services",
-      "items": ["Azure Services", "AWS Lambda", "Serverless Architecture"]
+      "items": ["Azure Services", "AWS Lambda", "Serverless Architecture", "Self-Hosted Production Deployment"]
     }
   ],
   "management": ["Project Planning", "Team Leadership", "Client Communication"],

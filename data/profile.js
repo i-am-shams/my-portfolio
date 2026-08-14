@@ -8,6 +8,8 @@ export const siteProfile = {
   image: "/avatar.png",
   resume: "/Khalid_Shams_Resume.pdf",
   github: "https://github.com/i-am-shams",
+  // LinkedIn profile URL. Renders in header and footer once set to a URL string; intentionally null until supplied.
+  linkedin: null,
   location: "Dhaka, Bangladesh",
   certification: "Certified ScrumMaster",
   summary:
@@ -63,7 +65,7 @@ export function personJsonLd() {
       addressLocality: "Dhaka",
       addressCountry: "BD",
     },
-    sameAs: [siteProfile.github],
+    sameAs: [siteProfile.github, siteProfile.linkedin].filter(Boolean),
     knowsAbout: siteProfile.keywords,
     hasCredential: {
       "@type": "EducationalOccupationalCredential",

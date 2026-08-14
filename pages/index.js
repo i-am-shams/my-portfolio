@@ -119,44 +119,42 @@ export default function Home() {
                 Enterprise Software Engineering Leader
               </p>
               <h1 className="mb-5 text-4xl font-bold tracking-tight text-slate-950 dark:text-white md:text-6xl">
-                I build business-critical enterprise systems, reporting platforms, and
-                operational dashboards.
+                I lead enterprise delivery — and I still build and operate the systems myself.
               </h1>
               <p className="mb-7 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-                I&apos;m Khalid Shams, a 14+ year software engineering leader
-                specializing in .NET, cloud-enabled architecture, data-driven
-                applications, ERP systems, SCADA-integrated platforms, and executive
-                reporting solutions for enterprise and public-service operations.
+                14+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and enterprise operations. Two of the systems on this page are running in production right now, on infrastructure I designed, deployed, and maintain.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="#case-study"
+                  href="#engineering"
                   className="inline-flex items-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-100"
                 >
-                  View Enterprise Case Study
+                  See systems running in production
                 </a>
                 <a
-                  href="#engineering"
+                  href="#case-study"
                   className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-600 dark:text-slate-100 dark:hover:border-blue-300 dark:hover:text-blue-200"
                 >
-                  See a System I Built
+                  Enterprise case study
                 </a>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3 text-sm">
                 <a
                   href={siteProfile.resume}
                   download
-                  className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-600 dark:text-slate-100 dark:hover:border-blue-300 dark:hover:text-blue-200"
+                  className="text-slate-600 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-slate-300 dark:hover:text-slate-100"
                 >
                   Download Resume
                 </a>
                 <Link
                   href="/cv"
-                  className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-600 dark:text-slate-100 dark:hover:border-blue-300 dark:hover:text-blue-200"
+                  className="text-slate-600 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-slate-300 dark:hover:text-slate-100"
                 >
                   View CV
                 </Link>
                 <a
                   href="mailto:i.am.shams@gmail.com"
-                  className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-600 dark:text-slate-100 dark:hover:border-blue-300 dark:hover:text-blue-200"
+                  className="text-slate-600 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-slate-300 dark:hover:text-slate-100"
                 >
                   Contact Khalid
                 </a>
@@ -314,9 +312,7 @@ export default function Home() {
           <div id="engineering">
             <Section title="Engineering Deep Dive">
               <p className="max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
-                Enterprise delivery is one kind of evidence; a system you can open in a
-                browser is another. This one is designed, built, deployed and operated
-                end to end, and is running in production right now.
+                Enterprise delivery is one kind of evidence; a system you can open in a browser is another. Both of these were designed, built, deployed, and operated end to end, and both are running in production right now.
               </p>
               {buildProjects.map((project) => (
                 <BuildProject key={project.slug} project={project} />

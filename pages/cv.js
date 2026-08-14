@@ -39,6 +39,25 @@ const enterpriseDomains = [
   "Operational Dashboards",
 ];
 
+const selectedProjects = [
+  {
+    name: "DentalPMS",
+    blurb:
+      "Multi-tenant SaaS practice management system for dental clinics. Clean Architecture on ASP.NET Core and Blazor Server, with tenant isolation enforced by EF Core global query filters. Designed, built, deployed, and operated in production.",
+    url: "https://demo.dentflowbd.com/login",
+    linkLabel: "Live demo",
+    tech: "ASP.NET Core 8 · Blazor Server · PostgreSQL · EF Core · Docker · nginx",
+  },
+  {
+    name: "AI Job-Search Copilot",
+    blurb:
+      "Event-driven résumé-to-job matching pipeline. An ASP.NET Core API queues work to RabbitMQ, a background worker calls an AI model and persists results, and completions are pushed back to the browser over SignalR. Containerized, with CI/CD deploying on push.",
+    url: "https://jobcopilot.dentflowbd.com",
+    linkLabel: "Live app",
+    tech: "ASP.NET Core 8 · RabbitMQ · SignalR · PostgreSQL · React · Docker · GitHub Actions",
+  },
+];
+
 export default function CV() {
   const profileTitle = `${siteProfile.uppercaseName} | ${siteProfile.title}`;
   const description = siteProfile.summary;
@@ -119,13 +138,6 @@ export default function CV() {
             </div>
           </section>
 
-          <section className="my-8 rounded-2xl border border-blue-100 bg-blue-50 p-5 text-sm leading-6 text-blue-950 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-100 print:hidden">
-            <strong>Resume download strategy:</strong> use{" "}
-            <span className="font-semibold">Download Resume PDF</span> for the official
-            recruiter-ready document. Use <span className="font-semibold">Save as PDF</span>{" "}
-            only when you want a fresh export of this web CV page.
-          </section>
-
           <section
             aria-label="Resume proof points"
             className="my-8 grid gap-4 md:grid-cols-5"
@@ -162,6 +174,38 @@ export default function CV() {
                 >
                   {domain}
                 </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Selected Projects">
+            <div className="space-y-6">
+              {selectedProjects.map((project) => (
+                <article
+                  key={project.name}
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                >
+                  <h3 className="text-xl font-semibold text-slate-950 dark:text-white mb-3">
+                    {project.name}
+                  </h3>
+                  <p className="mb-3 text-slate-600 dark:text-slate-300">
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.name} — ${project.linkLabel}`}
+                      className="font-medium text-blue-700 hover:underline dark:text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950 rounded"
+                    >
+                      {project.linkLabel}
+                    </a>
+                  </p>
+                  <p className="mb-3 text-slate-600 dark:text-slate-300">
+                    {project.blurb}
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    {project.tech}
+                  </p>
+                </article>
               ))}
             </div>
           </Section>

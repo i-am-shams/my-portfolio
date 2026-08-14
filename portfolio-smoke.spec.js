@@ -10,7 +10,7 @@ test.describe("portfolio smoke tests", () => {
     await expect(page).toHaveTitle(/Enterprise Software Engineering Leader/);
     await expect(
       page.getByRole("heading", {
-        name: /business-critical enterprise systems, reporting platforms, and operational dashboards/i,
+        name: /I lead enterprise delivery .* build and operate the systems myself/i,
       }),
     ).toBeVisible();
     await expect(page.getByText("14+").first()).toBeVisible();
@@ -26,7 +26,7 @@ test.describe("portfolio smoke tests", () => {
   test("homepage case-study CTA jumps to flagship case study", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByRole("link", { name: "View Enterprise Case Study" }).click();
+    await page.getByRole("link", { name: "Enterprise case study" }).click();
 
     await expect(page).toHaveURL(/#case-study/);
     await expect(page.getByRole("heading", { name: "CWASA Digital Ecosystem" })).toBeVisible();
@@ -39,18 +39,33 @@ test.describe("portfolio smoke tests", () => {
 
     await page.goto("/");
 
+    // DentalPMS is the lead build; the copilot follows it.
+    await expect(page.getByRole("heading", { name: "DentalPMS" })).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "AI Job-Search Copilot" }),
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "View live app" }),
     ).toHaveAttribute("href", "https://jobcopilot.dentflowbd.com");
+    await expect(
+      page.getByRole("link", { name: "Open live demo" }),
+    ).toHaveAttribute("href", "https://demo.dentflowbd.com/login");
+    // Source is private, so the absence of a repo link must be explained rather
+    // than just missing.
+    await expect(page.getByText(/Source is private/)).toBeVisible();
+    await expect(page.getByText("Lines of C#")).toBeVisible();
 
     // The diagram is the whole point of the section; assert it actually renders
     // rather than trusting that the file exists.
+    // next/image lazy-loads, and DentalPMS now sits above this, so the diagram is
+    // well below the fold. Scroll to it as a reader would, then assert it really
+    // decoded - naturalWidth stays 0 for a broken or never-fetched image.
     const diagram = page.getByRole("img", { name: /Architecture diagram/i });
+    await diagram.scrollIntoViewIfNeeded();
     await expect(diagram).toBeVisible();
-    expect(await diagram.evaluate((img) => img.naturalWidth)).toBeGreaterThan(0);
+    await expect
+      .poll(async () => diagram.evaluate((img) => img.naturalWidth), { timeout: 10_000 })
+      .toBeGreaterThan(0);
 
     await expect(page.getByText(/Liveness and readiness are separate endpoints/)).toBeVisible();
     await expect(page.getByText(/No IaC layer/)).toBeVisible();
@@ -60,10 +75,49 @@ test.describe("portfolio smoke tests", () => {
   test("hero CTA jumps to the engineering deep dive", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByRole("link", { name: "See a System I Built" }).click();
+    await page.getByRole("link", { name: "See systems running in production" }).click();
 
     await expect(page).toHaveURL(/#engineering/);
     await expect(page.getByRole("heading", { name: "Engineering Deep Dive" })).toBeVisible();
+  });
+
+
+  test("GitHub is reachable from the page, not just from structured data", async ({ page }) => {
+    // Regression guard for the original defect: siteProfile.github existed but was
+    // only ever emitted inside JSON-LD sameAs, so no human could click it.
+    await page.goto("/");
+
+    await expect(
+      page.getByRole("link", { name: "GitHub profile" }),
+    ).toHaveAttribute("href", "https://github.com/i-am-shams");
+    await expect(
+      page.getByRole("contentinfo").getByRole("link", { name: "GitHub" }),
+    ).toBeVisible();
+  });
+
+  test("hero has exactly one primary call to action", async ({ page }) => {
+    await page.goto("/");
+
+    const primary = page.getByRole("link", { name: "See systems running in production" });
+    await expect(primary).toBeVisible();
+    await expect(primary).toHaveAttribute("href", "#engineering");
+  });
+
+  test("CV lists the live projects and drops the internal note", async ({ page }) => {
+    await page.goto("/cv");
+
+    await expect(page.getByRole("heading", { name: "Selected Projects" })).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "DentalPMS — Live demo" }),
+    ).toHaveAttribute("href", "https://demo.dentflowbd.com/login");
+
+    // Skills must reflect what is actually used now, and must not date the CV.
+    await expect(page.getByText("PostgreSQL").first()).toBeVisible();
+    await expect(page.getByText("RabbitMQ").first()).toBeVisible();
+    await expect(page.getByText("Firebug")).toHaveCount(0);
+
+    // Internal note-to-self, previously visible to employers.
+    await expect(page.getByText(/Resume download strategy/)).toHaveCount(0);
   });
 
   test("CV page shows recruiter-oriented resume sections", async ({ page }) => {
@@ -98,7 +152,7 @@ test.describe("portfolio smoke tests", () => {
     await page.goto("/");
 
     await expect(page.getByText("Enterprise Software Engineering Leader").first()).toBeVisible();
-    await expect(page.getByRole("link", { name: "View Enterprise Case Study" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Enterprise case study" })).toBeVisible();
     await expect(page.getByText("100k+", { exact: true })).toBeVisible();
   });
 });

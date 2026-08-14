@@ -6,6 +6,83 @@
  */
 export const buildProjects = [
   {
+    slug: "dental-pms",
+    title: "DentalPMS",
+    tagline:
+      "A multi-tenant SaaS for dental clinics — designed, built, deployed, and operated in production",
+    liveUrl: "https://demo.dentflowbd.com/login",
+    repoUrl: null,
+    sourceNote:
+      "Source is private — this is a commercial product with real clinics on it. The live demo below is a seeded tenant containing no real patient data.",
+    demo: {
+      url: "https://demo.dentflowbd.com/login",
+      // Set both of these to strings to render the credentials block.
+      username: null,
+      password: null,
+      note: "Seeded demo clinic. No real patient data.",
+    },
+    diagram: null,
+    stats: [
+      { value: "127k", label: "Lines of C#" },
+      { value: "41", label: "Domain entities" },
+      { value: "167", label: "Automated tests" },
+      { value: "33", label: "EF Core migrations" },
+      { value: "326", label: "Commits" },
+    ],
+    summary:
+      "A practice management system for Bangladeshi dental clinics, from solo practitioners to multi-chair practices. It is built around the receptionist's day rather than the dentist's: a fixed-slot scheduler, patient records, dental charting, billing and payment ledgers, and printable visit summaries. It is a real product with clinics using it, not a demonstration.",
+    why:
+      "This is the project where the architecture had to hold up under real use rather than under a README. Multiple clinics share one deployment, so tenant isolation is a correctness and privacy requirement, not a design preference — and the operational side (backups, custom clinic domains, email delivery, upgrades without downtime) is as much of the work as the code.",
+    architecture: [
+      "Clean Architecture across four projects — Domain, Application, Infrastructure, Web — so business rules carry no dependency on EF Core, Blazor, or any external service.",
+      "Multi-tenancy is enforced structurally, not by convention: the clinic is resolved from the request's subdomain into a scoped ICurrentClinicService, and EF Core global query filters apply ClinicId to every tenant-scoped entity automatically.",
+      "ASP.NET Identity with JWTs (HS256) carried in HttpOnly cookies for browser clients, and policy-based authorization — components check policies such as CanCreateAppointment, rather than merely checking that a claim exists.",
+      "Blazor Server UI over 81 components, backed by PostgreSQL with all timestamps persisted in UTC and converted at the edges through documented helpers.",
+      "Runs on a VPS behind nginx with per-clinic custom domains, and is operated from 13 written runbooks covering offsite backups, SMTP setup, clinic domain onboarding, and production incidents.",
+    ],
+    decisions: [
+      {
+        title: "Tenant isolation is structural, not remembered",
+        body:
+          "Every tenant-scoped query is filtered by EF Core global query filters rather than by a WHERE clause the developer has to remember. A forgotten filter in a multi-tenant medical system is not a bug, it is a data breach — so the design makes the unsafe query impossible to write by accident. IgnoreQueryFilters() is permitted only in narrow, documented admin paths.",
+      },
+      {
+        title: "The scheduler is receptionist-first, on fixed 10-minute slots",
+        body:
+          "Free-form appointment times model a calendar; fixed slots model how a clinic front desk actually books. Constraining the domain made the scheduling UI faster to operate and removed a whole class of overlap and rounding bugs at the source.",
+      },
+      {
+        title: "All timestamps persist as UTC",
+        body:
+          "Timezone handling is the classic defect in any scheduling product. Every persisted timestamp is UTC, conversion happens only at the display edge, and the rule is written down as a convention document rather than left to each developer's judgement.",
+      },
+      {
+        title: "Private source, public demo",
+        body:
+          "The code is not open, because clinics pay for it. A seeded demo tenant is the honest substitute: it lets the product be judged on what it actually does, without exposing either the source or anyone's patient data.",
+      },
+    ],
+    stack: [
+      "ASP.NET Core 8",
+      "Blazor Server",
+      "C#",
+      "PostgreSQL",
+      "EF Core",
+      "ASP.NET Identity",
+      "Clean Architecture",
+      "Multi-tenancy",
+      "Tailwind CSS",
+      "Docker",
+      "nginx",
+      "Playwright",
+      "xUnit",
+    ],
+    knownGaps: [
+      "Single-server deployment — no horizontal scaling or automated failover yet.",
+      "The source is private, so the demo and this writeup stand in for reading the code.",
+    ],
+  },
+  {
     slug: "ai-job-search-copilot",
     title: "AI Job-Search Copilot",
     tagline: "Event-driven AI matching pipeline, built and deployed end to end",
@@ -13,6 +90,9 @@ export const buildProjects = [
     // The repository is currently private. Set this to the URL to have the
     // "Source" link render; nothing else needs to change.
     repoUrl: null,
+    sourceNote: null,
+    demo: null,
+    stats: null,
     diagram: {
       src: "/jobcopilot-architecture.png",
       alt:

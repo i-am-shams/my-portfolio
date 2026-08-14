@@ -26,7 +26,7 @@ export default function BuildProject({ project }) {
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-100"
           >
-            View live app
+            {project.demo ? "Open live demo" : "View live app"}
           </a>
           {project.repoUrl && (
             <a
@@ -43,19 +43,56 @@ export default function BuildProject({ project }) {
 
       <p className="mb-6 leading-7 text-slate-700 dark:text-slate-300">{project.summary}</p>
 
-      <figure className="mb-8">
-        <Image
-          src={project.diagram.src}
-          alt={project.diagram.alt}
-          width={1600}
-          height={900}
-          className="h-auto w-full rounded-2xl border border-slate-200 bg-white dark:border-slate-700"
-        />
-        <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Request flow: the API queues work rather than calling the model inline, and the
-          result is pushed back to the browser when the worker finishes.
-        </figcaption>
-      </figure>
+      {project.stats && project.stats.length > 0 && (
+        <div
+          className="mb-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+          aria-label={`${project.title} statistics`}
+        >
+          {project.stats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-2xl font-bold text-slate-950 dark:text-white">{stat.value}</p>
+              <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!project.repoUrl && project.sourceNote && (
+        <p className="mb-6 text-sm text-slate-600 dark:text-slate-300">{project.sourceNote}</p>
+      )}
+
+      {project.demo && project.demo.username && project.demo.password && (
+        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5 dark:border-blue-900 dark:bg-blue-950">
+          <h4 className="mb-4 font-semibold text-slate-950 dark:text-white">Demo access</h4>
+          <div className="space-y-3 mb-3">
+            <div>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">Username</p>
+              <p className="font-mono text-sm text-slate-950 dark:text-white">{project.demo.username}</p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">Password</p>
+              <p className="font-mono text-sm text-slate-950 dark:text-white">{project.demo.password}</p>
+            </div>
+          </div>
+          <p className="text-sm text-slate-600 dark:text-slate-300">{project.demo.note}</p>
+        </div>
+      )}
+
+      {project.diagram && (
+        <figure className="mb-8">
+          <Image
+            src={project.diagram.src}
+            alt={project.diagram.alt}
+            width={1600}
+            height={900}
+            className="h-auto w-full rounded-2xl border border-slate-200 bg-white dark:border-slate-700"
+          />
+          <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+            Request flow: the API queues work rather than calling the model inline, and the
+            result is pushed back to the browser when the worker finishes.
+          </figcaption>
+        </figure>
+      )}
 
       <div className="grid gap-8 md:grid-cols-2">
         <div>
