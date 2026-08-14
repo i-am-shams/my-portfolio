@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 
 /**
@@ -6,6 +7,8 @@ import Image from "next/image";
  * show the architecture and the reasoning rather than summarise outcomes.
  */
 export default function BuildProject({ project }) {
+  const [credentialsRevealed, setCredentialsRevealed] = useState(false);
+
   return (
     <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8">
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
@@ -71,7 +74,17 @@ export default function BuildProject({ project }) {
             </div>
             <div>
               <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">Password</p>
-              <p className="font-mono text-sm text-slate-950 dark:text-white">{project.demo.password}</p>
+              {credentialsRevealed ? (
+                <p className="font-mono text-sm text-slate-950 dark:text-white">{project.demo.password}</p>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setCredentialsRevealed(true)}
+                  className="mt-1 inline-flex items-center rounded-lg border border-blue-300 bg-white px-3 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-200 dark:hover:bg-blue-900"
+                >
+                  Click to reveal password
+                </button>
+              )}
             </div>
           </div>
           <p className="text-sm text-slate-600 dark:text-slate-300">{project.demo.note}</p>

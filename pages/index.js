@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import JsonLd from "../components/JsonLd";
 import Layout from "../components/Layout";
@@ -162,6 +163,20 @@ export default function Home() {
             </div>
 
             <aside className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800">
+              <div className="mb-5 flex items-center gap-4">
+                <Image
+                  src={siteProfile.image}
+                  alt={`${siteProfile.name} portrait`}
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 flex-shrink-0 rounded-full border border-slate-200 object-cover dark:border-slate-600"
+                  priority
+                />
+                <div>
+                  <p className="font-semibold text-slate-950 dark:text-white">{siteProfile.name}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">{siteProfile.location}</p>
+                </div>
+              </div>
               <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 Enterprise Systems Profile
               </p>

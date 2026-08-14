@@ -78,6 +78,44 @@ gaps — the template that DentalPMS's card above was later built to match.
   to scroll the element into view and poll for `naturalWidth`, so it still
   fails on a genuinely broken image.
 
+## Session 2 — hero photo + demo credential exposure fix
+
+Reviewed the site as an interviewer would and proposed several bold changes
+(LinkedIn wiring, hero photo, testimonial line, gated demo credentials,
+recent-activity proof, plain-text resume, source-note parity on enterprise
+cards). User picked two to act on this session; the rest are logged below as
+still-open suggestions, not forgotten.
+
+- **Hero photo added.** `pages/index.js`'s hero `<aside>` now leads with
+  `siteProfile.image` (64px circular avatar) next to name and location,
+  above the "Enterprise Systems Profile" bullets. Previously the only place
+  a photo appeared was `og:image`/JSON-LD — invisible to a human reader of
+  the page itself.
+- **DentalPMS demo password no longer ships in the server-rendered HTML.**
+  `components/BuildProject.js` now gates the password behind a "Click to
+  reveal password" button (`useState`, default hidden); the username still
+  renders directly since it's not the sensitive half. Verified with
+  Playwright against a production build (`next build && next start`): the
+  string `Demo@123` is absent from `page.content()` before the click and
+  present after. This does not defend against a bot that executes JS and
+  clicks buttons, and does nothing about rate-limiting on the login
+  endpoint itself (that's server-side on `demo.dentflowbd.com`, outside
+  this repo — still genuinely unverified, per the existing Open Items
+  entry below). What it does fix: a plain `curl`/search-engine crawl of the
+  static HTML no longer turns up the plaintext password.
+- Both changes rendered and screenshotted via Playwright + headless
+  Chromium (`next build && next start`, not dev mode) before being
+  considered done — hero photo shows correctly in the card; reveal button
+  toggles correctly.
+
+**Still-open bold suggestions from this session's review, not yet
+actioned:** LinkedIn URL (blocked — no URL supplied yet), a testimonial/
+reference quote, a recent-activity signal near the GitHub link (commit
+graph or direct link to repo activity once a repo goes public), a
+plain-text resume alternative (`/resume.txt`) for ATS-style skimming, and a
+one-line "why no link" note on `enterpriseProjects` cards for parity with
+`sourceNote` on the build cards.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
