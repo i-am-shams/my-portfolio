@@ -161,4 +161,64 @@ export const buildProjects = [
       "A single API instance, and rate limiting held in memory rather than shared.",
     ],
   },
+  {
+    slug: "one-page-commerce",
+    title: "One-Page Commerce",
+    tagline:
+      "A single-product COD storefront a non-developer can launch and edit — built, deployed, and operated end to end",
+    liveUrl: "https://one-page-commerce.vercel.app/",
+    repoUrl: null,
+    sourceNote:
+      "Source is private — this is a commercial product with real stores selling through it.",
+    demo: null,
+    stats: null,
+    diagram: {
+      src: "/onepagecommerce-storefront.png",
+      alt:
+        "The One-Page Commerce storefront live on a real product page: a Wooden Kids Hanging Gym listing with pricing, a Cash-on-Delivery badge, verified-ratings copy, an embedded product video, and Order Now / See Reviews calls to action.",
+      caption:
+        "The live storefront on a real listing — pricing, COD badge, and checkout entry point rendered from the admin-configured product content, not a static mockup.",
+    },
+    summary:
+      "A reusable template for single-product Cash-on-Delivery storefronts: a long-form sales page, an embedded checkout, and an admin panel that lets a non-developer change product content, pricing, images, testimonials, and tracking pixels without touching code. Supports both a single-tenant self-hosted install and a pooled multi-tenant deployment.",
+    why:
+      "The interesting problem here isn't the storefront — it's making the admin side safe for a non-developer to operate unsupervised. Pricing, discounts, and delivery fees are all recalculated server-side at checkout regardless of what the client sends, and every tenant's product config, orders, and analytics are scoped so a shared deployment can't leak between stores.",
+    architecture: [
+      "Next.js App Router with a route-group split — (storefront) for the public one-page funnel, admin for the content/orders dashboard, api for checkout, admin actions, analytics, health, and webhooks.",
+      "PostgreSQL in production (SQLite only for local demos), with tenant-scoped schema so the same deployment can serve one store or many.",
+      "Checkout pricing is always recomputed server-side at submission — the client-side price shown is never trusted — with duplicate-submission protection and admin notifications on new orders.",
+      "Docker Compose for self-hosted deployment, with a documented single-tenant Vercel + Neon path as the low-friction alternative.",
+      "An optional Redis-compatible queue handles notification retries and background jobs rather than sending them inline on the request path.",
+    ],
+    decisions: [
+      {
+        title: "Server-side pricing is non-negotiable",
+        body:
+          "Every checkout submission recalculates price, discount, and delivery fee from the database, never from what the client posts. A single-product storefront is exactly the kind of app where a client-trusted price field is the obvious attack — so the design closes it structurally rather than relying on validation someone could forget to add.",
+      },
+      {
+        title: "One codebase, two deployment shapes",
+        body:
+          "Single-tenant (one owner, one storefront) and multi-tenant (many owners, tenant-scoped domains, orders, and analytics) run from the same code, gated by an APP_MODE setting rather than a fork. That keeps a simple one-store deployment simple, without closing the door on running it as a pooled platform later.",
+      },
+      {
+        title: "Health checks report status only, never secrets",
+        body:
+          "The /api/health payload reports app, database, and queue status and nothing else — a lesson carried over from operating other production services, where a health endpoint is a public URL by definition and has to be designed as one from the start.",
+      },
+    ],
+    stack: [
+      "Next.js (App Router)",
+      "TypeScript",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Docker Compose",
+      "Redis-compatible queue",
+    ],
+    knownGaps: [
+      "No automated test suite yet — verification is manual QA and a documented checklist rather than CI-run tests, unlike the other two projects here.",
+      "Online payments, courier API integration, and multi-product carts are out of scope for v1 — Cash on Delivery only.",
+      "Source is private, so this writeup and the live storefront stand in for reading the code.",
+    ],
+  },
 ];

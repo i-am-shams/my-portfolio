@@ -6,10 +6,10 @@ import Layout from "../components/Layout";
 import Section from "../components/Section";
 import BuildProject from "../components/BuildProject";
 import { buildProjects } from "../data/buildProjects";
-import { absoluteUrl, personJsonLd, siteProfile, websiteJsonLd } from "../data/profile";
+import { absoluteUrl, personJsonLd, siteProfile, websiteJsonLd, yearsOfExperience } from "../data/profile";
 
 const proofMetrics = [
-  { value: "14+", label: "Years in enterprise software" },
+  { value: `${yearsOfExperience()}+`, label: "Years in enterprise software" },
   { value: "30+", label: "Engineers and QA led" },
   { value: "100k+", label: "Utility users supported" },
   { value: "1M+", label: "Monthly transactions architected" },
@@ -123,7 +123,7 @@ export default function Home() {
                 I lead enterprise delivery — and I still build and operate the systems myself.
               </h1>
               <p className="mb-7 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-                14+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and enterprise operations. Two of the systems on this page are running in production right now, on infrastructure I designed, deployed, and maintain.
+                {yearsOfExperience()}+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and enterprise operations. Two of the systems on this page are running in production right now, on infrastructure I designed, deployed, and maintain.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a

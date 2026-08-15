@@ -1,3 +1,17 @@
+// Career started April 2010 (CACTS LTD, per data/resume.json). Computed at
+// build time rather than hardcoded, so "X+ years" never goes stale on its own.
+const CAREER_START = new Date(2010, 3, 1);
+
+export function yearsOfExperience() {
+  const now = new Date();
+  let years = now.getFullYear() - CAREER_START.getFullYear();
+  const hadAnniversaryThisYear =
+    now.getMonth() > CAREER_START.getMonth() ||
+    (now.getMonth() === CAREER_START.getMonth() && now.getDate() >= CAREER_START.getDate());
+  if (!hadAnniversaryThisYear) years -= 1;
+  return years;
+}
+
 export const siteProfile = {
   name: "Khalid Shams",
   uppercaseName: "KHALID SHAMS",
@@ -13,7 +27,7 @@ export const siteProfile = {
   location: "Dhaka, Bangladesh",
   certification: "Certified ScrumMaster",
   summary:
-    "Senior enterprise software engineer and solution architect with 14+ years of experience in .NET, reporting platforms, analytics dashboards, ERP systems, cloud-enabled architecture, SCADA/GIS integration, and technical delivery leadership.",
+    `Senior enterprise software engineer and solution architect with ${yearsOfExperience()}+ years of experience in .NET, reporting platforms, analytics dashboards, ERP systems, cloud-enabled architecture, SCADA/GIS integration, and technical delivery leadership.`,
   roleTargets: [
     "Senior Software Engineer",
     "Technical Lead",

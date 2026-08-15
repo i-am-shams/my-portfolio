@@ -13,7 +13,9 @@ test.describe("portfolio smoke tests", () => {
         name: /I lead enterprise delivery .* build and operate the systems myself/i,
       }),
     ).toBeVisible();
-    await expect(page.getByText("14+").first()).toBeVisible();
+    // Years of experience is computed at build time from a fixed career-start
+    // date, not hardcoded, so assert the shape ("N+") rather than a literal value.
+    await expect(page.getByText(/^\d+\+$/).first()).toBeVisible();
     await expect(page.getByText("CWASA Digital Ecosystem")).toBeVisible();
     await expect(page.getByText("Certified ScrumMaster")).toBeVisible();
     await expect(page.getByRole("link", { name: "Download Resume", exact: true }).first()).toHaveAttribute(
@@ -44,16 +46,22 @@ test.describe("portfolio smoke tests", () => {
     await expect(
       page.getByRole("heading", { name: "AI Job-Search Copilot" }),
     ).toBeVisible();
+    const dentalPmsCard = page.locator("article", {
+      has: page.getByRole("heading", { name: "DentalPMS" }),
+    });
+    const copilotCard = page.locator("article", {
+      has: page.getByRole("heading", { name: "AI Job-Search Copilot" }),
+    });
     await expect(
-      page.getByRole("link", { name: "View live app" }),
+      copilotCard.getByRole("link", { name: "View live app" }),
     ).toHaveAttribute("href", "https://jobcopilot.dentflowbd.com");
     await expect(
-      page.getByRole("link", { name: "Open live demo" }),
+      dentalPmsCard.getByRole("link", { name: "Open live demo" }),
     ).toHaveAttribute("href", "https://demo.dentflowbd.com/login");
     // Source is private, so the absence of a repo link must be explained rather
     // than just missing.
-    await expect(page.getByText(/Source is private/)).toBeVisible();
-    await expect(page.getByText("Lines of C#")).toBeVisible();
+    await expect(dentalPmsCard.getByText(/Source is private/)).toBeVisible();
+    await expect(dentalPmsCard.getByText("Lines of C#")).toBeVisible();
 
     // The diagram is the whole point of the section; assert it actually renders
     // rather than trusting that the file exists.

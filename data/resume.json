@@ -6,7 +6,7 @@
     "email": "i.am.shams@gmail.com",
     "photo": "/avatar.png"
   },
-  "careerObjective": "Enterprise software engineering leader with 14+ years of experience designing, delivering, and modernizing business-critical systems across utilities, ERP, financial analytics, OCR, reporting, and operational management domains. Strong background in .NET, ASP.NET Core, React, Angular, SQL Server, REST APIs, microservices, Azure/AWS, SCADA integration, GIS integration, dashboards, and cross-functional technical leadership.",
+  "careerObjective": "Enterprise software engineering leader with {{YEARS}}+ years of experience designing, delivering, and modernizing business-critical systems across utilities, ERP, financial analytics, OCR, reporting, and operational management domains. Strong background in .NET, ASP.NET Core, React, Angular, SQL Server, REST APIs, microservices, Azure/AWS, SCADA integration, GIS integration, dashboards, and cross-functional technical leadership.",
   "experience": [
     {
       "position": "Solution Delivery Specialist",

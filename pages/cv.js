@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 import Section from "../components/Section";
 import SkillCategory from "../components/SkillCategory";
 import resumeData from "../data/resume.json";
-import { absoluteUrl, profilePageJsonLd, siteProfile } from "../data/profile";
+import { absoluteUrl, profilePageJsonLd, siteProfile, yearsOfExperience } from "../data/profile";
 import {
   AcademicCapIcon,
   BriefcaseIcon,
@@ -23,7 +23,7 @@ const roleTargets = [
 ];
 
 const proofMetrics = [
-  "14+ years enterprise software engineering",
+  `${yearsOfExperience()}+ years enterprise software engineering`,
   "30+ member cross-functional delivery leadership",
   "100k+ utility users supported",
   "1M+ monthly transactions architected",
@@ -102,7 +102,7 @@ export default function CV() {
                   {resumeData.personalInfo.name}
                 </h1>
                 <p className="mb-5 max-w-4xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-                  {resumeData.careerObjective}
+                  {resumeData.careerObjective.replace("{{YEARS}}", yearsOfExperience())}
                 </p>
                 <div className="flex flex-wrap gap-3 text-sm font-medium">
                   <a
