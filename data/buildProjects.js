@@ -94,9 +94,7 @@ export const buildProjects = [
     tagline:
       "Event-driven AI matching pipeline with a polyglot microservice, deployed and observed end to end",
     liveUrl: "https://jobcopilot.dentflowbd.com",
-    // The repository is currently private. Set this to the URL to have the
-    // "Source" link render; nothing else needs to change.
-    repoUrl: null,
+    repoUrl: "https://github.com/i-am-shams/ai-jobsearch-copilot",
     sourceNote: null,
     demo: null,
     stats: [
