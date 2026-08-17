@@ -91,33 +91,45 @@ export const buildProjects = [
   {
     slug: "ai-job-search-copilot",
     title: "AI Job-Search Copilot",
-    tagline: "Event-driven AI matching pipeline, built and deployed end to end",
+    tagline:
+      "Event-driven AI matching pipeline with a polyglot microservice, deployed and observed end to end",
     liveUrl: "https://jobcopilot.dentflowbd.com",
     // The repository is currently private. Set this to the URL to have the
     // "Source" link render; nothing else needs to change.
     repoUrl: null,
     sourceNote: null,
     demo: null,
-    stats: null,
+    stats: [
+      { value: "7", label: "Containers in production" },
+      { value: "2", label: "Bounded contexts" },
+      { value: "3", label: "Environments verified" },
+      { value: "4", label: "CI/CD images built" },
+    ],
     diagram: {
       src: "/jobcopilot-architecture.png",
       alt:
-        "Architecture diagram: a React frontend calls an ASP.NET Core API, which publishes match requests to RabbitMQ; a background worker consumes them, calls the Gemini API, writes results to PostgreSQL, and publishes a completion event that the API pushes back to the browser over SignalR.",
+        "Architecture diagram: a React frontend calls an ASP.NET Core API, which publishes match requests to RabbitMQ for a background worker; the worker calls the Gemini API, writes results to PostgreSQL, and publishes once to a fanout exchange. Two independent services each bind their own queue to it: the API, which pushes to the browser over SignalR, and a Node.js notifications service, which writes to its own MongoDB Atlas cluster. A separate Alloy agent ships metrics and logs from every container to Grafana Cloud.",
       caption:
-        "Request flow: the API queues work rather than calling the model inline, and the result is pushed back to the browser when the worker finishes.",
+        "Request flow: the worker publishes once to a fanout exchange rather than a queue, so the API and the notifications service each get an independent copy of every event - the fix for a real bug where a second consumer on the same queue would have silently split the API's own messages.",
     },
     summary:
-      "Paste a resume and a job description, get an AI-generated match score and gap analysis. The interesting part is not the AI call - it is that the work happens asynchronously through a message queue and a background worker, with the result pushed back to the browser in real time rather than polled for.",
+      "Paste a resume and a job description, get an AI-generated match score and gap analysis. The interesting part is not the AI call - it is that the work happens asynchronously through a message queue and a background worker, with the result pushed back to the browser in real time rather than polled for, and that a second, independent Node.js service now reacts to the same completion event without touching the first service's code or database.",
     why:
-      "Built deliberately as a distributed system rather than a CRUD app, to exercise the architecture patterns end to end: message queue, background worker, real-time push, containerization, CI/CD, and a production deployment with health gating.",
+      "Built deliberately as a distributed system rather than a CRUD app, to exercise the architecture patterns end to end: message queue, background worker, real-time push, containerization, CI/CD, and a production deployment with health gating. Extended into a second phase to add a genuinely polyglot bounded context, managed cloud infrastructure, centralized observability, and real IaC - the microservices and cloud-native side of the same system.",
     architecture: [
       "ASP.NET Core 8 API publishes a durable message to RabbitMQ instead of calling the AI provider inline, so a slow or failing model never blocks a request.",
-      "A C# BackgroundService worker consumes with manual ack and prefetch 1, calls Gemini, persists to PostgreSQL via EF Core, then publishes a completion event.",
-      "A second queue bridges the worker back to the API, which pushes results to the right browser over SignalR using per-user groups keyed on the JWT subject claim.",
-      "Five containers via Docker Compose, with datastores unpublished and the API bound to loopback only; the frontend's own nginx proxies the API on the same origin, so production needs no CORS at all.",
-      "GitHub Actions builds three images and deploys on push to master. The deploy key is pinned to a forced command on the server, so a leaked CI secret cannot open a shell.",
+      "A C# BackgroundService worker consumes with manual ack and prefetch 1, calls Gemini, persists to PostgreSQL via EF Core, then publishes once to a fanout exchange rather than a queue.",
+      "Two independent consumers each bind their own durable queue to that exchange: the API, which pushes results to the right browser over SignalR using per-user groups keyed on the JWT subject claim; and a separate Node.js/TypeScript notifications service, which records its own document to its own MongoDB Atlas cluster - a different database technology, with no dependency on the API/worker's code or Postgres database.",
+      "Grafana Alloy ships host and per-container metrics and logs to Grafana Cloud, explicitly scoped to this project's own containers on a VPS that also runs an unrelated production app.",
+      "Terraform manages the MongoDB Atlas resources (imported, not created, since the cluster already held real data) and the VPS deploy path itself via file/remote-exec provisioners - deliberately excluding the server's secrets file from IaC, since templating live credentials on a first apply was judged a worse risk than the manual step it replaced.",
+      "Seven containers via Docker Compose, with datastores unpublished and the API bound to loopback only; the frontend's own nginx proxies the API on the same origin, so production needs no CORS at all. GitHub Actions builds four images and deploys on push to master, behind a deploy key pinned to a forced command so a leaked CI secret cannot open a shell.",
     ],
     decisions: [
+      {
+        title: "A queue is point-to-point; an exchange is pub/sub",
+        body:
+          "Adding the notifications service as a second consumer of the worker's existing completion queue would have made RabbitMQ round-robin deliveries between it and the API - silently dropping roughly half of all live SignalR pushes. Caught by reading the existing consumer's code before writing a new one, not by testing after the fact. Fixed at the architecture level: the worker now publishes once to a fanout exchange, and each service binds its own queue to it. Verified via RabbitMQ's own per-queue message stats after a real submission - one delivery and one ack on both queues, not just one.",
+      },
       {
         title: "Liveness and readiness are separate endpoints",
         body:
@@ -134,6 +146,11 @@ export const buildProjects = [
           "The deployment smoke test checked only the HTTP status of /health. The frontend's SPA fallback returns 200 with index.html for any unmatched path, so it passed against a deployment where the endpoint did not exist - proven against the live site before it was fixed to assert the response body.",
       },
       {
+        title: "Terraform adopted an already-live system without touching it",
+        body:
+          "The Atlas cluster and its database user already held real data, so nothing was apply-created - everything was imported, then `terraform plan` was used to find where the written config diverged from live reality before any apply. That caught a real security finding (the notifications DB user holds far broader privileges than it needs) which was deliberately left unfixed in the same pass - narrowing a live credential's access is a separate decision from adopting IaC, not a side effect of it.",
+      },
+      {
         title: "Prompt injection is handled in two independent layers",
         body:
           "User-submitted resume and job text is untrusted input to the model. Delimiters plus an explicit data-not-instructions instruction on the way in, and a clamped score and length-capped output on the way out - because prompt wording alone is never a guarantee. Tested with a real injection attempt, which scored 0.",
@@ -148,6 +165,10 @@ export const buildProjects = [
       "SignalR",
       "React",
       "TypeScript",
+      "Node.js",
+      "MongoDB Atlas",
+      "Terraform",
+      "Grafana Cloud",
       "TanStack Query",
       "Docker Compose",
       "nginx",
@@ -156,7 +177,8 @@ export const buildProjects = [
     ],
     // Named honestly rather than omitted; the gaps are as informative as the wins.
     knownGaps: [
-      "No IaC layer - the server is configured by documented manual steps, not Terraform or Ansible.",
+      "The notifications database user holds broader privileges than it needs (full admin rather than scoped access) - found via Terraform, deliberately not silently fixed in the same pass.",
+      "No dead-letter queue - poison messages are dropped rather than stalling the worker, which is correct but means the message is gone.",
       "Deploys pull :latest rather than a commit SHA, so rollback is a manual edit on the server.",
       "A single API instance, and rate limiting held in memory rather than shared.",
     ],

@@ -76,7 +76,10 @@ test.describe("portfolio smoke tests", () => {
       .toBeGreaterThan(0);
 
     await expect(page.getByText(/Liveness and readiness are separate endpoints/)).toBeVisible();
-    await expect(page.getByText(/No IaC layer/)).toBeVisible();
+    await expect(
+      page.getByText(/A queue is point-to-point; an exchange is pub\/sub/),
+    ).toBeVisible();
+    await expect(page.getByText(/The notifications database user holds broader privileges/)).toBeVisible();
     expect(pageErrors).toEqual([]);
   });
 

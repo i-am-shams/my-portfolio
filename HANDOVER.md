@@ -265,6 +265,56 @@ done directly.
   Verified computed correctly as **16+** as of this session (April 2010
   to present).
 
+## Session 5 — synced the Job-Search Copilot card to its Project 2 work
+
+The sibling `ai-jobsearch-copilot` repo shipped a real second phase since this
+card was last written: a Node.js/TypeScript notifications microservice (its
+own MongoDB Atlas cluster), Grafana Cloud observability, and real Terraform
+for both Atlas and the VPS deploy path. Updated `data/buildProjects.js`'s
+`ai-job-search-copilot` entry to match, done directly (not delegated —
+positioning and which engineering story to lead with need judgment):
+
+- **New `stats` row** (was `null`): 7 containers, 2 bounded contexts, 3
+  environments verified, 4 CI/CD images — all real numbers pulled from that
+  repo's own `docs/HANDOVER.md`, not invented.
+- **`public/jobcopilot-architecture.png` replaced** with the sibling repo's
+  freshly redrawn diagram (fanout exchange, notifications, MongoDB Atlas,
+  Alloy, Grafana Cloud) — copied directly from its `docs/architecture.png`,
+  not redrawn separately, so the two repos' diagrams can't drift apart.
+- **New decision entries added**: "A queue is point-to-point; an exchange is
+  pub/sub" (the fanout-exchange bug — judged the strongest single story from
+  that phase: a real bug, caught before shipping, fixed at the architecture
+  level, verified via RabbitMQ's own stats) and "Terraform adopted an
+  already-live system without touching it" (import-first, `plan`-before-apply
+  discipline, and the honest naming of a real security finding it surfaced
+  rather than silently fixing).
+- **`knownGaps` rewritten**: removed "No IaC layer" (now false) and "failed
+  matches don't push SignalR" was already gone from an earlier sync; added
+  the two new real gaps (the notifications DB user's excess privileges, no
+  dead-letter queue) alongside the still-true ones (`:latest` deploys, single
+  API instance).
+- **`stack` gained**: Node.js, MongoDB Atlas, Terraform, Grafana Cloud.
+
+**Real bug caught by the site's own image cache, not the code**: right after
+swapping the diagram file, a screenshot still showed the *old* diagram.
+`curl`ing the raw `/public` file and the `/_next/image` optimizer endpoint
+separately showed the raw file was correct but the optimizer wasn't — a
+stale entry in `.next/cache/images` from before the file swap. Fixed by
+clearing that cache directory and restarting the server, then re-verified
+with a second screenshot before trusting it.
+
+**Real bug caught by running the test suite, not by writing the update**:
+the existing smoke test asserted the literal old known-gap text ("No IaC
+layer"), which the content update correctly removed — failed loudly instead
+of silently passing on stale content. Updated the assertion to check for the
+new fanout-exchange decision title and the new known-gap text instead of
+just deleting the check.
+
+Verified: `npm run lint` and `npm run build` clean, a real Playwright
+screenshot of the rendered card (not just "build passed") confirmed both the
+new diagram and the new copy before pushing, and all 10
+`portfolio-smoke.spec.js` tests pass.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
