@@ -315,6 +315,21 @@ screenshot of the rendered card (not just "build passed") confirmed both the
 new diagram and the new copy before pushing, and all 10
 `portfolio-smoke.spec.js` tests pass.
 
+## Session 6 — patched Next.js CVE-2026-64641 dependency exposure
+
+Reviewed GitHub Advisory GHSA-m99w-x7hq-7vfj / CVE-2026-64641. The vulnerable
+path is App Router with at least one Server Action; this repo has no `app/`
+directory and no `use server` / Server Action usage, so the live application
+was not using the affected feature path. Still fixed the dependency declaration
+because `package.json` advertised `next: ^16.2.6`, inside the advisory's
+affected `>=16.0.0, <16.2.11` range, even though the lockfile had already
+resolved a safe version.
+
+- Updated `next` and `eslint-config-next` to `^16.3.1`; lockfile now resolves
+  `next@16.3.1` and matching Next SWC / ESLint packages.
+- Verified with `npm audit`, `npm run lint`, `npm run build`, and the full
+  Playwright smoke suite (`10 passed`).
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
