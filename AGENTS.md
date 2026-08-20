@@ -44,10 +44,13 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   directly (a real login attempt, a real request) rather than trusting that
   someone typed it correctly. This caught a wrong demo password before it
   shipped — see `HANDOVER.md`.
-- **Any project card added here needs its own `caption` on its `diagram`
-  field** (see `data/buildProjects.js` / `components/BuildProject.js`) — a
-  shared/hardcoded caption across multiple projects' images was a real bug
-  found this session.
+- **Any project card added here needs its own `caption` on both its
+  `diagram` and its `screenshot` field** (see `data/buildProjects.js` /
+  `components/BuildProject.js`) — a shared/hardcoded caption across
+  multiple projects' images was a real bug found in an earlier session.
+- **A plate is only verified once it has been looked at in *both* themes.**
+  The light palette is copied from a reference; the dark palette is
+  invented, so it is where a figure goes wrong first.
 
 ## Content structure
 
@@ -61,3 +64,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   repo link reads as a stated decision ("this is commercial, source stays
   private") rather than an unexplained omission. Use it whenever `repoUrl`
   is `null` for a reason worth stating.
+- **Architecture figures follow `docs/diagram-standard.md`.** They are
+  inline-SVG React components under `components/diagrams/`, composed from a
+  fixed shape vocabulary on a fixed 1200×630 canvas, and each one draws
+  exactly one decision as before → transform → after. Do not add a Mermaid
+  render, a screenshot of a whiteboard, or a PNG exported from another tool
+  — the standard exists because the site previously carried one of each.
+- **`diagram` and `screenshot` are different evidence and both belong on a
+  card.** The plate proves the system was designed; the screenshot proves it
+  exists and is running. Neither substitutes for the other.

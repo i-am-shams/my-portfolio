@@ -22,7 +22,19 @@ export const buildProjects = [
       note: "Seeded demo clinic. No real patient data.",
     },
     diagram: {
+      plate: "tenant-filter",
+      title:
+        "Tenant isolation in DentalPMS: hand-written clinic filters hoisted into one global query filter",
+      desc:
+        "Before and after. On the left, a dashed box holding three separate hand-written 'where clinic_id = ?' clauses, the third faded to stand for the one a developer eventually forgets. An arrow labelled 'hoist' leads to the right, where the appointments, billing and charting modules all send their queries through a single diamond labelled 'global filter' before reaching one postgres database.",
+      aphorism: "One filter. Every query.",
+      caption:
+        "Tenant scoping is applied by EF Core global query filters at the DbContext, not by a WHERE clause each developer has to remember. In a multi-tenant medical system a forgotten filter is not a bug, it is a data breach - so the design makes the unsafe query impossible to write by accident, and IgnoreQueryFilters() is permitted only in narrow, documented admin paths.",
+    },
+    screenshot: {
       src: "/dentalpms-dashboard.png",
+      width: 1400,
+      height: 900,
       alt:
         "The DentalPMS clinic admin dashboard, logged in as a demo clinic: today's appointments, month-to-date collections and charges, outstanding dues, active treatment cycles, new patients in the last 30 days, and flagged operational signals such as collection efficiency and no-show pressure.",
       caption:
@@ -104,11 +116,26 @@ export const buildProjects = [
       { value: "4", label: "CI/CD images built" },
     ],
     diagram: {
-      src: "/jobcopilot-architecture.png",
-      alt:
-        "Architecture diagram: a React frontend calls an ASP.NET Core API, which publishes match requests to RabbitMQ for a background worker; the worker calls the Gemini API, writes results to PostgreSQL, and publishes once to a fanout exchange. Two independent services each bind their own queue to it: the API, which pushes to the browser over SignalR, and a Node.js notifications service, which writes to its own MongoDB Atlas cluster. A separate Alloy agent ships metrics and logs from every container to Grafana Cloud.",
+      plate: "fanout",
+      title:
+        "Fanout in the AI Job-Search Copilot: one queue round-robining between two consumers, replaced by an exchange that copies every event to both",
+      desc:
+        "Before and after. On the left, a dashed box labelled 'round-robin' in which one queue splits its deliveries between two consumers, each edge marked one half. An arrow labelled 'fan out' leads to the right, where a diamond labelled 'exchange' delivers to two independent services, api and notifications, each writing to its own store - postgres and mongo.",
+      aphorism: "One publish. Two copies.",
       caption:
         "Request flow: the worker publishes once to a fanout exchange rather than a queue, so the API and the notifications service each get an independent copy of every event - the fix for a real bug where a second consumer on the same queue would have silently split the API's own messages.",
+    },
+    // A second figure, deliberately: the plate above argues one decision, this one
+    // shows what actually runs. See the two figure types in docs/diagram-standard.md.
+    topology: {
+      plate: "copilot-topology",
+      title:
+        "Deployment topology of the AI Job-Search Copilot: seven containers on one VPS, with three managed services outside it",
+      desc:
+        "A deployment map. A browser reaches an nginx shared with an unrelated production app, which forwards over the Docker network to the project's own frontend container, then to an ASP.NET Core API. The API publishes to a RabbitMQ match-requests queue, which a background worker consumes; the worker scores the match against the Gemini API, writes results to PostgreSQL through EF Core, and publishes once to a fanout exchange. A Node.js notifications service binds its own queue to that exchange and writes to MongoDB Atlas, while an Alloy agent ships metrics and logs to Grafana Cloud. A dashed edge carries the SignalR push back from the API to the browser. Everything inside the dashed boundary is a container on one VPS; the Gemini API, MongoDB Atlas and Grafana Cloud sit outside it, drawn as outlines rather than filled boxes.",
+      aphorism: "One box. Three clouds.",
+      caption:
+        "What actually runs: seven containers under one Docker Compose file on a single VPS, and the three managed services the system leans on but does not operate - drawn as outlines to keep that boundary visible. The nginx at the top is shared with an unrelated production app, which is why Alloy's scrape config is scoped to this stack's own containers rather than the whole host.",
     },
     summary:
       "Paste a resume and a job description, get an AI-generated match score and gap analysis. The interesting part is not the AI call - it is that the work happens asynchronously through a message queue and a background worker, with the result pushed back to the browser in real time rather than polled for, and that a second, independent Node.js service now reacts to the same completion event without touching the first service's code or database.",
@@ -193,7 +220,19 @@ export const buildProjects = [
     demo: null,
     stats: null,
     diagram: {
+      plate: "server-price",
+      title:
+        "Checkout pricing in One-Page Commerce: the client-posted total is discarded and recomputed server-side",
+      desc:
+        "Before and after. On the left, a dashed box labelled 'client-posted total' in which a browser sends 'total: 499' straight into checkout. An arrow labelled 'recompute' leads to the right, where the same request arrives but its price is stopped by a cross before it reaches checkout; checkout instead reads from a pricing store and arrives at a different total, 449.",
+      aphorism: "Client asks. Server decides.",
+      caption:
+        "Every checkout submission recalculates price, discount, and delivery fee from the database, never from what the client posts. A single-product storefront is exactly the kind of app where a client-trusted price field is the obvious attack - so the design closes it structurally rather than relying on validation someone could forget to add.",
+    },
+    screenshot: {
       src: "/onepagecommerce-storefront.png",
+      width: 1280,
+      height: 900,
       alt:
         "The One-Page Commerce storefront live on a real product page: a Wooden Kids Hanging Gym listing with pricing, a Cash-on-Delivery badge, verified-ratings copy, an embedded product video, and Order Now / See Reviews calls to action.",
       caption:

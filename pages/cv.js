@@ -56,6 +56,14 @@ const selectedProjects = [
     linkLabel: "Live app",
     tech: "ASP.NET Core 8 · RabbitMQ · SignalR · PostgreSQL · React · Docker · GitHub Actions",
   },
+  {
+    name: "One-Page Commerce",
+    blurb:
+      "Single-product Cash-on-Delivery storefront with an admin panel a non-developer can operate unsupervised. Next.js App Router on PostgreSQL, with checkout pricing always recomputed server-side and tenant-scoped data so one deployment can serve a single store or many.",
+    url: "https://one-page-commerce.vercel.app/",
+    linkLabel: "Live app",
+    tech: "Next.js (App Router) · TypeScript · PostgreSQL · Tailwind CSS · Docker Compose",
+  },
 ];
 
 export default function CV() {

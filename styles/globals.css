@@ -5,11 +5,21 @@
 :root {
   --background: #f8fafc;
   --foreground: #020617;
+  --plate-ground: #efe9da;
+  --plate-ink: #2f7a51;
+  --plate-ink-text: #256640;
+  --plate-label: #1a1a1a;
+  --plate-rule: #2a2a2a;
 }
 
 .dark {
   --background: #020617;
   --foreground: #f8fafc;
+  --plate-ground: #12180f;
+  --plate-ink: #6fbf8f;
+  --plate-ink-text: #8ed3a8;
+  --plate-label: #e8e4d8;
+  --plate-rule: #8a8f84;
 }
 
 html {
@@ -77,5 +87,13 @@ body {
   a {
     color: #0f172a !important;
     text-decoration: none !important;
+  }
+
+  :root {
+    --plate-ground: #ffffff;
+    --plate-ink: #1a1a1a;
+    --plate-ink-text: #1a1a1a;
+    --plate-label: #1a1a1a;
+    --plate-rule: #1a1a1a;
   }
 }

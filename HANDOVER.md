@@ -330,6 +330,80 @@ resolved a safe version.
 - Verified with `npm audit`, `npm run lint`, `npm run build`, and the full
   Playwright smoke suite (`10 passed`).
 
+## Session 7 — architecture figure standard, three plates, count-copy drift
+
+Uncommitted at time of writing. The site's writing carried its argument and
+its images did not: only one of three build projects had an architecture
+diagram at all, and that one was a Mermaid `flowchart TD` render at default
+theme (`#FFFFDE` clusters, `#333` text), 784×1107 portrait, rasterised, and
+copied in from the sibling `ai-jobsearch-copilot` repo so it could not even be
+edited here. The other two projects filled the diagram slot with product
+screenshots — good evidence, but of a different claim. A screenshot proves a
+system exists; it does not show that anyone designed it.
+
+**What landed:**
+
+- **`docs/diagram-standard.md`** — the durable standard. 1200×630 canvas, one
+  warm ground and one green accent as CSS custom properties, system serif in
+  italic, a closed ten-shape vocabulary, and a hard rule that every figure
+  draws exactly one decision as before → transform → after with a two-clause
+  aphorism at the bottom. Read this before adding any figure.
+- **`components/diagrams/`** — `plate.js` (the fixed canvas, which also draws
+  the aphorism so it cannot drift between figures), `primitives.js` (the ten
+  shapes), three plate components, and `index.js`, a registry that **throws**
+  on an unknown key rather than rendering nothing.
+- **Four plates.** Three decision plates, each drawing an argument already
+  written in that project's `decisions[]`, plus one topology plate: DentalPMS *"One filter. Every query."* (hand-written
+  `WHERE` → EF Core global query filter), the Copilot *"One publish. Two
+  copies."* (queue round-robin → fanout exchange), One-Page Commerce
+  *"Client asks. Server decides."* (client-posted price → server-recomputed).
+  The fourth is the Copilot's deployment map, *"One box. Three clouds."*,
+  which replaced the imported Mermaid PNG outright.
+- **`diagram` and `screenshot` split into separate fields** on all three
+  entries in `data/buildProjects.js`. Both render, plate first.
+- **Count-copy drift fixed in four places.** One-Page Commerce made it three
+  projects back in Session 4, but the hero lede, the Deep Dive intro, the
+  closing CTA and `cv.js`'s `selectedProjects` all still said two.
+
+**Things worth knowing next time:**
+
+- **The plates are inline SVG React components, not `.svg` files.** That is
+  deliberate and load-bearing: an `<img>` is an isolated document, so a
+  `.svg` behind `next/image` would not inherit the page's theme tokens. Live
+  `<text>` also means the labels stay crisp at any zoom and are selectable.
+- **Two greens, on purpose.** `--plate-ink` (`#2f7a51`) on the cream ground
+  is ~4.4:1 — fine for shapes under WCAG's 3:1 graphical bar, short of the
+  4.5:1 text bar. Label text therefore uses `--plate-ink-text` (`#256640`,
+  ~6:1). Do not collapse them back into one token.
+- **The standard has two figure types, not one.** The first pass defined a
+  plate as "one decision, before → transform → after", which left the
+  Copilot's full-topology Mermaid PNG with nowhere to live — so it was kept
+  in the `screenshot` slot and the card ended up looking half-converted. That
+  was the wrong call and it was corrected in the same session: the standard
+  now also defines a **topology plate** (same canvas, palette, typography and
+  vocabulary; no before/after; sixteen shapes; margins relax to 60px), and
+  `CopilotTopologyPlate.js` replaces the PNG entirely. A project may carry a
+  decision plate and at most one topology plate — the Copilot is the only one
+  that does, via the `topology` field on its data entry.
+- **Solid vs outline now carries a second meaning in topology plates:** solid
+  `Instance` is a container you operate, outlined `External` / `Store` is a
+  managed service you consume. That is why the weight of the Copilot topology
+  falls on the seven containers and not on Gemini, Atlas and Grafana.
+- **`public/jobcopilot-architecture.png` is now unreferenced.** Left on disk
+  rather than deleted (it is the sibling repo's own asset), but nothing on the
+  site serves it, and a smoke test asserts it is no longer on the page.
+- **The `next/image` CLS bug is gone as a side effect.** `BuildProject.js`
+  used to hardcode `width={1600} height={900}` for all three images, whose
+  real dimensions are 1400×900, 784×1107 and 1280×900 — the portrait diagram
+  in particular reserved a landscape box and shifted the page on decode.
+  `screenshot.width` / `screenshot.height` now carry the real values, and a
+  smoke test asserts the declared ratio.
+- **The new assertions were mutation-tested, not just run.** Reverting a
+  count string and setting a width back to 1600 each produced a failure;
+  typo-ing a registry key took the whole page down. Given this repo's history
+  of tests that passed while asserting nothing (Sessions 1 and 5), a green
+  run on its own was not treated as evidence.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
@@ -365,17 +439,20 @@ resolved a safe version.
 | Favicon | `public/favicon.svg` (source of truth) + `public/favicon.ico` (hand-built multi-res fallback) + cache-busting version in `pages/_document.js` |
 | Years of experience ("N+ years") | `yearsOfExperience()` in `data/profile.js` — computed from a fixed start date, not hardcoded anywhere. Change the start date there if it's ever wrong, not the individual strings. |
 | Self-built project list | `data/buildProjects.js`, rendered by `components/BuildProject.js` — same pattern for a 4th project as the existing 3. |
+| An architecture figure (a "plate") | `docs/diagram-standard.md` first — it defines two figure types and which to use. Then `components/diagrams/`: add the component, register it in `components/diagrams/index.js`, and point the project's `diagram.plate` (a decision) or `topology.plate` (a deployment map) at the key. Figures are inline SVG, never image files. |
+| Plate colours (light, dark, print) | `styles/globals.css` — the `--plate-*` custom properties in `:root`, `.dark`, and the `@media print` block. Never hardcode a hex inside a plate component. |
 
 ## Open items — genuinely unfinished, not padding
 
 - **`linkedin: null` in `data/profile.js`.** One-line change once there's a
   URL to put there; the header/footer already render it conditionally.
-- **`repoUrl: null` for both projects in `data/buildProjects.js`.** Both
-  source repos are currently private. DentalPMS should probably stay
-  private indefinitely (commercial product, per its own `sourceNote`); the
-  Job-Search Copilot repo is a candidate to make public — if/when that
-  happens, setting this one field surfaces the "Source" button, nothing else
-  needs to change.
+- **`repoUrl: null` for DentalPMS and One-Page Commerce.** Both are
+  commercial products and should probably stay private indefinitely, per
+  their own `sourceNote`s. *(Resolved for the third: the Job-Search Copilot
+  repo went public in `f8cd2f6` and its `repoUrl` is set, which surfaces the
+  "Source" button. This entry said "both projects" for two sessions after
+  there were three of them — see the count-copy drift fixed in Session 7 for
+  the same class of error in user-facing copy.)*
 - **The demo panel's password is now gated behind a "click to reveal"
   button** (fixed in commit `eef244f`, prior session) rather than sitting
   in the static HTML — closes the search-engine-indexing exposure. What's

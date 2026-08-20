@@ -63,17 +63,23 @@ test.describe("portfolio smoke tests", () => {
     await expect(dentalPmsCard.getByText(/Source is private/)).toBeVisible();
     await expect(dentalPmsCard.getByText("Lines of C#")).toBeVisible();
 
-    // The diagram is the whole point of the section; assert it actually renders
-    // rather than trusting that the file exists.
-    // next/image lazy-loads, and DentalPMS now sits above this, so the diagram is
-    // well below the fold. Scroll to it as a reader would, then assert it really
-    // decoded - naturalWidth stays 0 for a broken or never-fetched image.
-    const diagram = page.getByRole("img", { name: /Architecture diagram/i });
-    await diagram.scrollIntoViewIfNeeded();
-    await expect(diagram).toBeVisible();
-    await expect
-      .poll(async () => diagram.evaluate((img) => img.naturalWidth), { timeout: 10_000 })
-      .toBeGreaterThan(0);
+    // The figures are the whole point of the section. The Copilot carries two:
+    // a decision plate arguing the fanout, and a topology plate showing what runs.
+    // Both are inline SVG, so there is no image to decode - assert instead that
+    // they are actually on the page and have real geometry.
+    for (const name of [
+      /Fanout in the AI Job-Search Copilot/i,
+      /Deployment topology of the AI Job-Search Copilot/i,
+    ]) {
+      const figure = page.getByRole("img", { name });
+      await figure.scrollIntoViewIfNeeded();
+      await expect(figure).toBeVisible();
+      const box = await figure.boundingBox();
+      expect(box.height).toBeGreaterThan(100);
+    }
+
+    // The Mermaid render this replaced is no longer served to anyone.
+    await expect(page.locator('img[src*="jobcopilot-architecture"]')).toHaveCount(0);
 
     await expect(page.getByText(/Liveness and readiness are separate endpoints/)).toBeVisible();
     await expect(
@@ -165,5 +171,110 @@ test.describe("portfolio smoke tests", () => {
     await expect(page.getByText("Enterprise Software Engineering Leader").first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Enterprise case study" })).toBeVisible();
     await expect(page.getByText("100k+", { exact: true })).toBeVisible();
+  });
+
+  test("every build project renders its architecture plate", async ({ page }) => {
+    await page.goto("/");
+
+    // One plate per build project, resolved through components/diagrams/index.js.
+    // Asserting the count as well as each name catches a registry key that fell
+    // through to nothing - a missing plate would otherwise just look like a
+    // slightly shorter card.
+    const plateNames = [
+      /Tenant isolation in DentalPMS/i,
+      /Fanout in the AI Job-Search Copilot/i,
+      /Deployment topology of the AI Job-Search Copilot/i,
+      /Checkout pricing in One-Page Commerce/i,
+    ];
+
+    for (const name of plateNames) {
+      const plate = page.getByRole("img", { name });
+      await plate.scrollIntoViewIfNeeded();
+      await expect(plate).toBeVisible();
+
+      // Inline SVG cannot fail to "load", but it can render as a zero-height box
+      // if the viewBox or the sizing classes regress, which reads as absent.
+      const box = await plate.boundingBox();
+      expect(box.width).toBeGreaterThan(200);
+      expect(box.height).toBeGreaterThan(100);
+    }
+
+    await expect(page.locator("svg[role='img'] > title")).toHaveCount(4);
+
+    // The aphorism is drawn by <Plate>, so if it is missing the wrapper was
+    // bypassed and the figure is off-standard.
+    for (const line of [
+      "One filter. Every query.",
+      "One publish. Two copies.",
+      "One box. Three clouds.",
+      "Client asks. Server decides.",
+    ]) {
+      await expect(page.getByText(line, { exact: true })).toBeVisible();
+    }
+  });
+
+  test("plates stay visible in dark mode", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /switch to/i }).click();
+    await expect(page.locator("html")).toHaveClass(/dark/);
+
+    // The dark palette is the invented half of the standard - the light plate is
+    // copied from a reference, the dark one is not - so it gets its own check.
+    const plate = page.getByRole("img", { name: /Fanout in the AI Job-Search Copilot/i });
+    await plate.scrollIntoViewIfNeeded();
+    await expect(plate).toBeVisible();
+
+    const ground = await plate.evaluate((svg) =>
+      getComputedStyle(svg).getPropertyValue("--plate-ground").trim(),
+    );
+    expect(ground).toBe("#12180f");
+  });
+
+  test("each build project keeps its screenshot alongside the plate", async ({ page }) => {
+    await page.goto("/");
+
+    // A plate proves the system was designed; a screenshot proves it exists.
+    // Both belong on the card, and the intrinsic dimensions must be the real
+    // ones or next/image reserves a wrongly-shaped box and the page shifts.
+    // Two, not three: the Copilot's slot held a Mermaid diagram rather than a
+    // screenshot of anything, and is now a topology plate instead.
+    const shots = [
+      { name: /DentalPMS clinic admin dashboard/i, ratio: 1400 / 900 },
+      { name: /One-Page Commerce storefront/i, ratio: 1280 / 900 },
+    ];
+
+    for (const shot of shots) {
+      const img = page.getByRole("img", { name: shot.name });
+      await img.scrollIntoViewIfNeeded();
+      await expect(img).toBeVisible();
+      await expect
+        .poll(async () => img.evaluate((el) => el.naturalWidth), { timeout: 10_000 })
+        .toBeGreaterThan(0);
+
+      const declared = await img.evaluate((el) => ({
+        w: Number(el.getAttribute("width")),
+        h: Number(el.getAttribute("height")),
+      }));
+      expect(declared.w / declared.h).toBeCloseTo(shot.ratio, 2);
+    }
+  });
+
+  test("project-count copy matches the three build projects", async ({ page }) => {
+    await page.goto("/");
+
+    // One-Page Commerce made this three; four separate sentences used to say two.
+    await expect(page.getByText(/Two of the systems on this page/)).toHaveCount(0);
+    await expect(page.getByText(/Both of these were designed/)).toHaveCount(0);
+    await expect(
+      page.getByText(/DentalPMS and the AI Job-Search Copilot are running/),
+    ).toHaveCount(0);
+
+    await expect(page.getByText(/Three of the systems on this page/)).toBeVisible();
+    await expect(page.getByText(/All three were designed/)).toBeVisible();
+
+    await page.goto("/cv");
+    await expect(
+      page.getByRole("heading", { name: "One-Page Commerce", exact: true }),
+    ).toBeVisible();
   });
 });

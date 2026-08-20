@@ -123,7 +123,7 @@ export default function Home() {
                 I lead enterprise delivery — and I still build and operate the systems myself.
               </h1>
               <p className="mb-7 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-                {yearsOfExperience()}+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and enterprise operations. Two of the systems on this page are running in production right now, on infrastructure I designed, deployed, and maintain.
+                {yearsOfExperience()}+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and enterprise operations. Three of the systems on this page are running in production right now, on infrastructure I designed, deployed, and maintain.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a
@@ -239,7 +239,7 @@ export default function Home() {
           <div id="engineering">
             <Section title="Engineering Deep Dive">
               <p className="max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
-                Enterprise delivery is one kind of evidence; a system you can open in a browser is another. Both of these were designed, built, deployed, and operated end to end, and both are running in production right now.
+                Enterprise delivery is one kind of evidence; a system you can open in a browser is another. All three were designed, built, deployed, and operated end to end, and all three are running in production right now.
               </p>
               {buildProjects.map((project) => (
                 <BuildProject key={project.slug} project={project} />
@@ -402,9 +402,9 @@ export default function Home() {
               Need someone who can own a system like the ones above — from architecture to production?
             </h2>
             <p className="mb-6 max-w-3xl leading-7 text-slate-300 dark:text-slate-700">
-              DentalPMS and the AI Job-Search Copilot are running in production right now, and
-              the CWASA ecosystem supported 100k+ users under my leadership. If that&apos;s the
-              kind of ownership your team needs, let&apos;s talk.
+              DentalPMS, the AI Job-Search Copilot, and One-Page Commerce are running in
+              production right now, and the CWASA ecosystem supported 100k+ users under my
+              leadership. If that&apos;s the kind of ownership your team needs, let&apos;s talk.
             </p>
             <div className="flex flex-wrap gap-3">
               <a

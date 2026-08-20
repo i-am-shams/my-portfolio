@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import PlateFigure from "@/components/diagrams";
 
 /**
  * Renders one self-directed build. Deliberately heavier than the
@@ -93,15 +94,37 @@ export default function BuildProject({ project }) {
 
       {project.diagram && (
         <figure className="mb-8">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+            <PlateFigure diagram={project.diagram} />
+          </div>
+          <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+            {project.diagram.caption}
+          </figcaption>
+        </figure>
+      )}
+
+      {project.topology && (
+        <figure className="mb-8">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+            <PlateFigure diagram={project.topology} />
+          </div>
+          <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+            {project.topology.caption}
+          </figcaption>
+        </figure>
+      )}
+
+      {project.screenshot && (
+        <figure className="mb-8">
           <Image
-            src={project.diagram.src}
-            alt={project.diagram.alt}
-            width={1600}
-            height={900}
+            src={project.screenshot.src}
+            alt={project.screenshot.alt}
+            width={project.screenshot.width}
+            height={project.screenshot.height}
             className="h-auto w-full rounded-2xl border border-slate-200 bg-white dark:border-slate-700"
           />
           <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-            {project.diagram.caption}
+            {project.screenshot.caption}
           </figcaption>
         </figure>
       )}
