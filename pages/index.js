@@ -16,6 +16,14 @@ const proofMetrics = [
   { value: "65%", label: "Reduction in manual reporting time" },
 ];
 
+// The three that survive a ten-second scan. proofMetrics keeps all five for the
+// band below the hero.
+const heroMetrics = [
+  { value: `${yearsOfExperience()}+`, label: "years in enterprise software" },
+  { value: "100k+", label: "utility users supported" },
+  { value: "1M+", label: "monthly transactions" },
+];
+
 const capabilityPillars = [
   {
     title: "Enterprise Application Architecture",
@@ -46,7 +54,7 @@ const enterpriseProjects = [
     summary:
       "Designed and developed inventory, accounts, payroll, and HR modules for Eastern Refinery Ltd., supporting structured enterprise workflows and internal reporting.",
     impact:
-      "Improved process consistency, reduced manual handling, and strengthened administrative visibility across business functions.",
+      "Replaced spreadsheet-based inventory, payroll, and accounts workflows with a single system of record, cutting manual handling and giving management consistent visibility across business functions.",
     technologies: [".NET", "ASP.NET", "SQL Server", "ERP Modules", "Reporting"],
   },
   {
@@ -55,7 +63,7 @@ const enterpriseProjects = [
     summary:
       "Developed financial analytics tools involving real-time data processing, market trend analysis, and decision-support workflows.",
     impact:
-      "Helped users work with faster financial signals, structured analytics, and clearer market insight.",
+      "Put real-time market signals and structured analytics in front of decision-makers, replacing end-of-day manual review with continuously updated positions.",
     technologies: [".NET", "Real-Time Data", "Analytics", "Predictive Logic"],
   },
   {
@@ -64,7 +72,7 @@ const enterpriseProjects = [
     summary:
       "Implemented OCR and image-processing solutions using Tesseract to extract structured data from scanned documents and image inputs.",
     impact:
-      "Reduced manual document-processing friction and supported more efficient digitization workflows.",
+      "Turned scanned documents into structured, searchable records without manual keying, removing the transcription step from the digitization workflow entirely.",
     technologies: ["Tesseract OCR", "Image Processing", "Data Extraction", ".NET"],
   },
 ];
@@ -77,7 +85,7 @@ const leadershipModel = [
 ];
 
 const credibilitySignals = [
-  "Certified ScrumMaster with delivery governance and release-readiness experience.",
+  "Certified ScrumMaster (2023-2025), with delivery governance and release-readiness experience.",
   "Computer Science background from BRAC University.",
   "Hands-on architecture and implementation depth across .NET, React, Angular, SQL Server, APIs, and cloud services.",
   "Enterprise domain exposure across utilities, ERP, financial analytics, OCR, reporting, and operational monitoring.",
@@ -120,11 +128,37 @@ export default function Home() {
                 Enterprise Software Engineering Leader
               </p>
               <h1 className="mb-5 text-4xl font-bold tracking-tight text-slate-950 dark:text-white md:text-6xl">
-                I lead enterprise delivery — and I still build and operate the systems myself.
+                I build and operate the systems I lead.
               </h1>
               <p className="mb-7 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-                {yearsOfExperience()}+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and enterprise operations. Three of the systems on this page are running in production right now, on infrastructure I designed, deployed, and maintain.
+                {yearsOfExperience()}+ years in enterprise .NET, ERP, and reporting platforms. Three of the systems on this page are running in production right now — architecture, deployment, and on-call, all mine.
               </p>
+              {/* Three numbers, inside the hero, so proof clears the fold on a
+                  390px phone as well as on a desktop. The full five-metric band
+                  below the hero is unchanged. */}
+              <dl className="mb-7 flex flex-wrap gap-x-8 gap-y-3" aria-label="Headline proof metrics">
+                {heroMetrics.map((metric) => (
+                  <div key={metric.label}>
+                    <dt className="sr-only">{metric.label}</dt>
+                    <dd>
+                      <span className="text-2xl font-bold text-slate-950 dark:text-white">
+                        {metric.value}
+                      </span>
+                      <span className="ml-2 text-sm text-slate-600 dark:text-slate-300">
+                        {metric.label}
+                      </span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              {/* The availability panel lives in the aside, which is below the fold on
+                  a phone - so the same answer gets a one-line form up here, hidden
+                  once the two-column layout kicks in and the panel is visible. */}
+              <p className="mb-6 text-sm text-slate-600 dark:text-slate-300 md:hidden">
+                {siteProfile.availability.status} · {siteProfile.availability.base} ·{" "}
+                {siteProfile.availability.notice} notice
+              </p>
+
               <div className="flex flex-wrap gap-3">
                 <a
                   href="#engineering"
@@ -177,15 +211,41 @@ export default function Home() {
                   <p className="text-sm text-slate-600 dark:text-slate-300">{siteProfile.location}</p>
                 </div>
               </div>
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                Enterprise Systems Profile
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-blue-700 dark:text-blue-300">
+                Availability
               </p>
-              <ul className="space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
-                <li>Utility billing, ERP, financial, OCR, and reporting platforms.</li>
-                <li>REST APIs, microservices, SQL Server, Azure/AWS, React, Angular.</li>
-                <li>SCADA/GIS integration and operational monitoring dashboards.</li>
-                <li>Delivery governance across engineering, QA, and business stakeholders.</li>
-              </ul>
+              <dl className="space-y-3 text-sm">
+                <div>
+                  <dt className="font-semibold text-slate-950 dark:text-white">Open to</dt>
+                  <dd className="text-slate-600 dark:text-slate-300">
+                    {siteProfile.availability.status}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-950 dark:text-white">Based in</dt>
+                  <dd className="text-slate-600 dark:text-slate-300">
+                    {siteProfile.availability.base}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-950 dark:text-white">Overlap</dt>
+                  <dd className="text-slate-600 dark:text-slate-300">
+                    {siteProfile.availability.overlap}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-950 dark:text-white">Notice</dt>
+                  <dd className="text-slate-600 dark:text-slate-300">
+                    {siteProfile.availability.notice}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-slate-950 dark:text-white">Looking for</dt>
+                  <dd className="text-slate-600 dark:text-slate-300">
+                    Senior Software Engineer · Technical Lead · Solution Architect
+                  </dd>
+                </div>
+              </dl>
             </aside>
           </section>
 
@@ -336,6 +396,12 @@ export default function Home() {
           </div>
 
           <Section title="Selected Enterprise Systems">
+            <p className="mb-6 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-300">
+              These are client and employer systems, so there is no link to open and no
+              source to read — unlike the builds above, you are taking these on my word.
+              They are described in terms of what was built rather than metrics I cannot
+              evidence here.
+            </p>
             <div className="grid gap-5 md:grid-cols-3">
               {enterpriseProjects.map((project) => (
                 <article

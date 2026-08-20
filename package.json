@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "prebuild": "node scripts/build-resume-txt.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint components data pages *.config.* portfolio-smoke.spec.js",
+    "lint": "eslint components data pages scripts *.config.* portfolio-smoke.spec.js",
+    "resume:txt": "node scripts/build-resume-txt.mjs",
     "test:e2e": "playwright test portfolio-smoke.spec.js"
   },
   "dependencies": {

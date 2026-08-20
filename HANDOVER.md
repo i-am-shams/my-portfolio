@@ -404,6 +404,61 @@ system exists; it does not show that anyone designed it.
   of tests that passed while asserting nothing (Sessions 1 and 5), a green
   run on its own was not treated as evidence.
 
+## Session 8 — recruiter pass: availability, engineering-first CV, ATS artifacts
+
+Reviewed from three seats — the recruiter who screens first, the hiring manager who reads
+second, the ATS that parses before either. Full writeup in `docs/recruiter-review.md`.
+
+The finding that drove the work: **the site was built for the hiring manager and
+under-built for the recruiter.** The evidence layer is strong, but a recruiter screens
+first and their questions went unanswered on the first screen — worse, the hero claimed
+*"I still build and operate the systems myself"* while every bullet in the last ten years of
+`resume.json` opened with a delivery-management verb. The page made a claim the CV then
+contradicted.
+
+**What landed:**
+
+- **Availability is now stated.** `siteProfile.availability` — remote worldwide, Dhaka
+  (UTC+6), time-zone overlap, one month's notice. Rendered as a panel in the hero aside,
+  and as a one-line `md:hidden` form so it clears the fold on a phone too.
+- **The `Enterprise Systems Profile` panel is gone.** It was four paragraphs of
+  comma-separated technology nouns occupying the most valuable rectangle on the site,
+  answering none of the questions a recruiter actually has.
+- **Headline shortened** to "I build and operate the systems I lead." The old one wrapped to
+  four lines on desktop and six on mobile, pushing all proof below the fold.
+- **`heroMetrics`** — three numbers inside the hero. `proofMetrics` still carries all five
+  in the band below. Before this, a 390×844 phone showed zero numbers on the first screen.
+- **CV bullets re-verbed and reordered, no facts changed.** BJIT now opens with
+  *Architected the CWASA Digital Ecosystem*, and *Designed and developed PDF creation
+  software* moved from last to fourth. The first four bullets of that role are now all
+  engineering.
+- **The lapsed ScrumMaster is stated with its dates** everywhere, including JSON-LD.
+- **`/resume.txt`** generated from `resume.json` by `scripts/build-resume-txt.mjs`, wired to
+  `prebuild` so it cannot drift. Footer gained a "Last updated" line from the same script.
+- **`enterpriseProjects` gained a parity note** and its three adjective-only `impact` lines
+  were rewritten with concrete outcomes.
+
+**Things worth knowing next time:**
+
+- **LinkedIn is still `null`, deliberately.** A profile exists but is out of date, and a
+  stale profile contradicting this portfolio is worse than no link. This is the highest-value
+  remaining action and it is outside this repo. Once refreshed, setting the one field
+  surfaces it in header, footer and JSON-LD `sameAs` — nothing else needs to change.
+- **`public/resume.txt` and `data/build-date.json` are generated and gitignored.** A fresh
+  clone must run `npm run resume:txt` before the first build, because `components/Layout.js`
+  imports the build-date JSON.
+- **The resume PDF is still 2.0 MB.** Above several ATS upload limits. Slimming it is a
+  manual re-export from the `.docx` with downsampled images — see `docs/recruiter-review.md`
+  §2 P2.
+- **Mutation testing found a real gap in my own test.** The "no lapsed credential" check read
+  `body.innerText()` and passed while `siteProfile.certification` was reverted to present
+  tense — because that field is only emitted into JSON-LD, which body text does not see. The
+  test now parses the `application/ld+json` blocks and asserts on `hasCredential`. A green
+  suite is still not evidence in this repo.
+- **Three pre-existing tests broke on the copy changes and that was correct** — they were
+  asserting the old headline, the old credential string, and a "100k+" that is now
+  ambiguous because `heroMetrics` introduced a second one.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
@@ -441,6 +496,8 @@ system exists; it does not show that anyone designed it.
 | Self-built project list | `data/buildProjects.js`, rendered by `components/BuildProject.js` — same pattern for a 4th project as the existing 3. |
 | An architecture figure (a "plate") | `docs/diagram-standard.md` first — it defines two figure types and which to use. Then `components/diagrams/`: add the component, register it in `components/diagrams/index.js`, and point the project's `diagram.plate` (a decision) or `topology.plate` (a deployment map) at the key. Figures are inline SVG, never image files. |
 | Plate colours (light, dark, print) | `styles/globals.css` — the `--plate-*` custom properties in `:root`, `.dark`, and the `@media print` block. Never hardcode a hex inside a plate component. |
+| Availability, notice period, what roles you want | `siteProfile.availability` in `data/profile.js` — one object feeds both the hero aside panel and the mobile one-liner. |
+| The plain-text resume or the footer's "last updated" | Neither is edited by hand. Both come from `scripts/build-resume-txt.mjs`, which runs on `prebuild`. Change `data/resume.json` and rebuild. |
 
 ## Open items — genuinely unfinished, not padding
 

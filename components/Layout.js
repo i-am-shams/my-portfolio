@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { siteProfile } from '../data/profile';
+import buildDate from "@/data/build-date.json";
 
 function getInitialDarkMode() {
   if (typeof window === 'undefined') {
@@ -138,6 +139,14 @@ export default function Layout({ children }) {
           </div>
           © {new Date().getFullYear()} Khalid Shams. Enterprise software engineering,
           reporting systems, and technical leadership.
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+            Last updated{" "}
+            {new Date(buildDate.date).toLocaleDateString("en-GB", {
+              month: "long",
+              year: "numeric",
+            })}
+            .
+          </p>
         </div>
       </footer>
     </div>

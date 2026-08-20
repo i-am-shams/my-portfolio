@@ -10,14 +10,14 @@ test.describe("portfolio smoke tests", () => {
     await expect(page).toHaveTitle(/Enterprise Software Engineering Leader/);
     await expect(
       page.getByRole("heading", {
-        name: /I lead enterprise delivery .* build and operate the systems myself/i,
+        name: /I build and operate the systems I lead/i,
       }),
     ).toBeVisible();
     // Years of experience is computed at build time from a fixed career-start
     // date, not hardcoded, so assert the shape ("N+") rather than a literal value.
     await expect(page.getByText(/^\d+\+$/).first()).toBeVisible();
     await expect(page.getByText("CWASA Digital Ecosystem")).toBeVisible();
-    await expect(page.getByText("Certified ScrumMaster")).toBeVisible();
+    await expect(page.getByText(/Certified ScrumMaster \(2023-2025\)/).first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Download Resume", exact: true }).first()).toHaveAttribute(
       "href",
       "/Khalid_Shams_Resume.pdf",
@@ -170,7 +170,7 @@ test.describe("portfolio smoke tests", () => {
 
     await expect(page.getByText("Enterprise Software Engineering Leader").first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Enterprise case study" })).toBeVisible();
-    await expect(page.getByText("100k+", { exact: true })).toBeVisible();
+    await expect(page.getByText("100k+", { exact: true }).first()).toBeVisible();
   });
 
   test("every build project renders its architecture plate", async ({ page }) => {
@@ -276,5 +276,110 @@ test.describe("portfolio smoke tests", () => {
     await expect(
       page.getByRole("heading", { name: "One-Page Commerce", exact: true }),
     ).toBeVisible();
+  });
+
+  test("recruiter questions are answered on the first screen", async ({ page }) => {
+    // A recruiter screens before a hiring manager reads. These are the four things
+    // they check, and all of them must clear the fold - on a phone as well as a desktop.
+    for (const size of [
+      { width: 1440, height: 900 },
+      { width: 390, height: 844 },
+    ]) {
+      await page.setViewportSize(size);
+      await page.goto("/");
+
+      // At least one hard number above the fold. The old hero showed none on mobile:
+      // the headline and lede filled the entire first screen.
+      const metrics = page.getByLabel("Headline proof metrics");
+      const box = await metrics.boundingBox();
+      expect(box, `metrics missing at ${size.width}px`).not.toBeNull();
+      expect(box.y + box.height, `metrics below fold at ${size.width}px`).toBeLessThan(
+        size.height,
+      );
+
+      // "Can I actually hire this person" - answered by the aside on desktop and by
+      // a one-line form on mobile, so assert the text is visible either way.
+      // The answer appears twice - a one-line form for phones, the aside panel for
+      // wider screens - so take whichever is visible here and require that it, too,
+      // clears the fold. Being rendered somewhere down the page is not the point.
+      const availability = page
+        .getByText(/Remote roles worldwide/)
+        .filter({ visible: true })
+        .first();
+      await expect(availability).toBeVisible();
+      const availBox = await availability.boundingBox();
+      expect(
+        availBox.y + availBox.height,
+        `availability below fold at ${size.width}px`,
+      ).toBeLessThan(size.height);
+
+      await expect(
+        page.getByText(/UTC\+6/).filter({ visible: true }).first(),
+      ).toBeVisible();
+    }
+  });
+
+  test("no page asserts a credential that has lapsed", async ({ page }) => {
+    // The CSM expired in Dec 2025. It may be shown historically, never in the
+    // present tense - this site's whole argument is that its claims are checkable.
+    for (const path of ["/", "/cv"]) {
+      await page.goto(path);
+      const body = await page.locator("body").innerText();
+      const mentions = body.match(/Certified ScrumMaster[^.]*/g) ?? [];
+      expect(mentions.length, `no CSM mention found on ${path}`).toBeGreaterThan(0);
+      for (const mention of mentions) {
+        expect(mention, `present-tense credential on ${path}: ${mention}`).toMatch(
+          /2023/,
+        );
+      }
+    }
+
+    // The visible copy is only half of it. siteProfile.certification is emitted as a
+    // schema.org hasCredential, which is a machine-readable assertion that the holder
+    // holds it now - and it is the path a body-text check does not see. This gap was
+    // found by mutation-testing, not by the suite passing.
+    await page.goto("/");
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const credentials = blocks
+      .flatMap((block) => (Array.isArray(JSON.parse(block)) ? JSON.parse(block) : [JSON.parse(block)]))
+      .flatMap((node) => node.hasCredential ?? [])
+      .map((credential) => credential.name);
+
+    expect(credentials.length, "no hasCredential found in JSON-LD").toBeGreaterThan(0);
+    for (const name of credentials) {
+      expect(name, `JSON-LD asserts a lapsed credential as current: ${name}`).toMatch(/2023/);
+    }
+  });
+
+  test("plain-text resume is served for ATS paste", async ({ page, baseURL }) => {
+    const res = await page.request.get(`${baseURL}/resume.txt`);
+    expect(res.status()).toBe(200);
+    const text = await res.text();
+
+    expect(text.length).toBeGreaterThan(1000);
+    expect(text).not.toContain("{{YEARS}}");
+    expect(text).not.toMatch(/<[a-z]+[\s>]/i);
+    // Generated from resume.json, so every role must survive the render.
+    for (const company of ["Today's Tech", "BJIT LTD", "CACTS LTD"]) {
+      expect(text).toContain(company);
+    }
+  });
+
+  test("the CV leads each recent role with engineering, not coordination", async ({
+    page,
+  }) => {
+    await page.goto("/cv");
+    const body = await page.locator("body").innerText();
+
+    // The homepage claims "I build and operate the systems I lead". These bullets
+    // are what a recruiter verb-scans to check that claim.
+    expect(body).toMatch(/Architected the CWASA Digital Ecosystem/);
+    expect(body).toMatch(/Designed and developed PDF creation software/);
+    expect(body).toMatch(/Own end-to-end solution architecture/);
+  });
+
+  test("footer carries a recency signal", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByText(/Last updated \w+ \d{4}\./)).toBeVisible();
   });
 });

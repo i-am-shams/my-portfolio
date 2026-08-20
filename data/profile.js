@@ -25,7 +25,18 @@ export const siteProfile = {
   // LinkedIn profile URL. Renders in header and footer once set to a URL string; intentionally null until supplied.
   linkedin: null,
   location: "Dhaka, Bangladesh",
-  certification: "Certified ScrumMaster",
+  // Answers the recruiter's first question - "can I actually hire this person?" -
+  // before they have to ask it. Rendered in the hero panel.
+  availability: {
+    status: "Remote roles worldwide",
+    base: "Dhaka, Bangladesh (UTC+6)",
+    overlap: "Full European hours · US East Coast mornings",
+    notice: "One month",
+  },
+  // Held 2023-2025, not currently renewed. Stated with its dates rather than in the
+  // present tense - a lapsed credential asserted as current undermines every other
+  // claim on a site whose whole argument is that its claims are checkable.
+  certification: "Certified ScrumMaster (2023-2025)",
   summary:
     `Senior enterprise software engineer and solution architect with ${yearsOfExperience()}+ years of experience in .NET, reporting platforms, analytics dashboards, ERP systems, cloud-enabled architecture, SCADA/GIS integration, and technical delivery leadership.`,
   roleTargets: [

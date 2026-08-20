@@ -14,12 +14,12 @@
       "companyUrl": "https://todaystech.us/",
       "duration": "Apr 2025 - Present",
       "responsibilities": [
-        "Lead end-to-end solution delivery from discovery and estimation through architecture alignment, implementation, quality gates, and production release",
-        "Translate business goals into technical roadmaps, milestones, release plans, and measurable delivery outcomes",
-        "Coordinate product, engineering, QA, and operations teams to keep enterprise delivery predictable and transparent",
+        "Own end-to-end solution architecture — from discovery and estimation through architecture alignment, implementation, quality gates, and production release",
+        "Translate business goals into technical roadmaps, system designs, release plans, and measurable delivery outcomes",
+        "Set technical direction across product, engineering, QA, and operations to keep enterprise delivery predictable and transparent",
         "Own sprint planning, backlog prioritization, dependency management, delivery risks, and release readiness",
         "Establish delivery governance through status reporting, stakeholder demos, risk tracking, and proactive mitigation",
-        "Support continuous improvement across delivery process, team collaboration, engineering quality, and operational handoff"
+        "Drive continuous improvement in engineering quality, delivery process, team collaboration, and operational handoff"
       ]
     },
     {
@@ -28,13 +28,13 @@
       "companyUrl": "https://bjitgroup.com/",
       "duration": "Oct 2016 - Mar 2025",
       "responsibilities": [
-        "Led enterprise software delivery across utility, reporting, analytics, content-creation, and operational management domains",
-        "Led a 30+ member cross-functional team of developers and QA engineers across planning, implementation, review, and release",
-        "Served as project lead for the CWASA Digital Ecosystem covering billing, NRW analysis, management dashboards, predictive analytics, SCADA integration, GIS integration, and reporting workflows",
-        "Architected and delivered systems supporting 100k+ users, 1M+ monthly transactions, and a 65% reduction in manual reporting effort",
-        "Coordinated with clients and business stakeholders to convert operational requirements into roadmaps, technical scope, and release plans",
+        "Architected the CWASA Digital Ecosystem as project lead — billing, NRW analysis, management dashboards, predictive analytics, SCADA integration, GIS integration, and reporting workflows",
+        "Delivered systems supporting 100k+ users, 1M+ monthly transactions, and a 65% reduction in manual reporting effort",
         "Conducted architecture reviews, code reviews, implementation guidance, dependency management, and production-readiness planning",
-        "Designed and developed PDF creation software, educator content tools, and bridge inspection management systems"
+        "Designed and developed PDF creation software, educator content tools, and bridge inspection management systems",
+        "Led a 30+ member cross-functional team of developers and QA engineers across planning, implementation, review, and release",
+        "Led enterprise software delivery across utility, reporting, analytics, content-creation, and operational management domains",
+        "Converted operational requirements into roadmaps, technical scope, and release plans with clients and business stakeholders"
       ]
     },
     {
@@ -149,7 +149,7 @@
     {
       "name": "Certified ScrumMaster®",
       "issuer": "SCRUM ALLIANCE®",
-      "validity": "Dec 2023 - Dec 2025"
+      "validity": "Dec 2023 - Dec 2025 (not currently renewed)"
     }
   ],
   "languages": [
