@@ -382,4 +382,50 @@ test.describe("portfolio smoke tests", () => {
     await page.goto("/");
     await expect(page.getByText(/Last updated \w+ \d{4}\./)).toBeVisible();
   });
+
+  test("plates paint in the right theme on the first frame", async ({ browser }) => {
+    // Regression guard. The theme used to be applied by a useEffect after hydration,
+    // so a dark-mode visitor got a full cream plate that inverted a moment later -
+    // which read as "the diagram does not render until you refresh". The fix is the
+    // blocking script in pages/_document.js; this asserts the plate is already the
+    // right colour at the first animation frame, before React has done anything.
+    const context = await browser.newContext({ colorScheme: "dark" });
+    const page = await context.newPage();
+    const consoleErrors = [];
+    page.on("console", (message) => {
+      if (message.type() === "error") consoleErrors.push(message.text());
+    });
+
+    await page.goto("/", { waitUntil: "commit" });
+    const firstPaintFill = await page.evaluate(
+      () =>
+        new Promise((resolve) =>
+          requestAnimationFrame(() => {
+            const rect = document.querySelector("svg[role='img'] rect");
+            resolve(rect ? getComputedStyle(rect).fill : null);
+          }),
+        ),
+    );
+
+    await page.waitForLoadState("load");
+    const settledFill = await page.evaluate(
+      () => getComputedStyle(document.querySelector("svg[role='img'] rect")).fill,
+    );
+
+    expect(firstPaintFill, "plate had not painted by the first frame").not.toBeNull();
+    expect(firstPaintFill, "plate flashed the light palette before going dark").toBe(
+      settledFill,
+    );
+    // #12180f, the dark plate ground.
+    expect(settledFill).toBe("rgb(18, 24, 15)");
+
+    // React does not patch up mismatched attributes, so a mismatch here leaves the
+    // server's markup on the page permanently.
+    const hydrationErrors = consoleErrors.filter((text) =>
+      /hydrat|didn't match|did not match/i.test(text),
+    );
+    expect(hydrationErrors, hydrationErrors.join(" | ")).toEqual([]);
+
+    await context.close();
+  });
 });

@@ -464,6 +464,49 @@ contradicted.
   asserting the old headline, the old credential string, and a "100k+" that is now
   ambiguous because `heroMetrics` introduced a second one.
 
+## Session 9 — theme was applied after hydration, so plates painted the wrong colour first
+
+Reported as "the page needs a refresh before the architecture diagrams render properly".
+Real bug, found and fixed.
+
+**What was wrong.** `components/Layout.js` read `localStorage` and `prefers-color-scheme`
+inside `useState`'s initialiser — during render. The server has neither, so it rendered
+light; the client's first pass rendered dark. React 19 reported a hydration mismatch on the
+theme toggle (`aria-label`, the icon's `className`, and the `path`'s `d`) and, critically,
+**does not patch up mismatched attributes** — it keeps the server's.
+
+Separately and more visibly, the `.dark` class itself was only applied by a `useEffect`,
+which runs *after* hydration. So a dark-mode visitor got the light palette painted first and
+inverted a moment later. Most of the page shrugs that off. The plates do not: their fills
+come from `--plate-*` custom properties, and a plate is a large solid rectangle, so it
+flipped from cream to near-black in full view. In `next dev`, where hydration is slow, that
+window is long enough to look like a broken render — and a refresh hydrates from warm cache,
+which is why refreshing "fixed" it.
+
+**Why it never showed in production.** Verified against the deployed site and a local
+`next start` in Chromium, Firefox and WebKit: four plates, correct colours, zero hydration
+errors in every combination. The symptom was real but dev-only. Worth remembering before
+assuming a report is not reproducible — it reproduced immediately once tested in the right
+environment.
+
+**The fix, in two parts:**
+
+- `pages/_document.js` carries a small blocking inline script that puts the theme class on
+  `<html>` before the browser paints anything. Nothing ever renders in the wrong theme now.
+  It must stay blocking and inline; deferring it defeats the point.
+- `components/Layout.js` no longer holds the theme in `useState`. It reads it through
+  `useSyncExternalStore`, with a `MutationObserver` on `<html>`'s class list as the
+  subscription and `false` as the server snapshot. React uses the server snapshot while
+  hydrating, so both sides agree, then switches to the live value. An earlier attempt used
+  `useState` plus a mount effect and was rejected by the `react-hooks/set-state-in-effect`
+  lint rule — correctly; `useSyncExternalStore` is the right primitive for "a value that
+  lives in the DOM".
+
+**Verified:** the plate now paints its final colour on the *first animation frame* in both
+schemes, not after hydration. Toggle, persistence and reload all still work. The regression
+test asserts first-frame colour and an empty hydration-error list, and was mutation-tested by
+deleting the blocking script — it fails.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
@@ -492,7 +535,7 @@ contradicted.
 | How a project card renders (layout, new optional fields) | `components/BuildProject.js` |
 | Hero copy, CTA structure, section order | `pages/index.js` |
 | CV skills, experience, Selected Projects | `data/resume.json`, `pages/cv.js` |
-| Header/footer links, dark mode | `components/Layout.js` |
+| Header/footer links, dark mode | `components/Layout.js` for the toggle and the icon — but the theme is applied by the blocking script in `pages/_document.js` before paint, and `Layout` only reads `<html>`'s class back via `useSyncExternalStore`. Never move theme detection into render; that was the Session 9 bug. |
 | Name, email, GitHub/LinkedIn URLs, SEO metadata | `data/profile.js` |
 | Smoke-test coverage | `portfolio-smoke.spec.js` |
 | Resume PDF content | **Manual now, not generated.** `public/Khalid_Shams_Resume.pdf` is a hand-exported PDF from `Khalid_Shams_Resume_DRAFT.docx` (repo root, untracked). Edit the `.docx` in Word/LibreOffice, export to PDF, drop it in `public/`. The `print:` CSS overrides in `pages/cv.js` / `components/Section.js` / `components/SkillCategory.js` / `styles/globals.css` still exist and still work for the CV *web page's* own print button, but are no longer how the downloadable PDF gets made. |
