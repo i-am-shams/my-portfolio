@@ -240,8 +240,10 @@ Batches R1 and R3 cannot be written until these are answered. Everything else ca
 1. **LinkedIn** — a profile exists but is out of date. Deliberately **not** linked from the
    site until it is refreshed; a stale profile that contradicts this portfolio is worse than
    no link. Refreshing it remains the highest-value action outside this repo.
-2. **Availability** — open to remote roles worldwide, remaining based in Dhaka (UTC+6).
-   Framed around time-zone overlap, which is what a remote recruiter screens on.
+2. **Availability** — open to remote roles worldwide **and** to on-site roles in Dhaka,
+   based in Dhaka (UTC+6). Both, not either. An earlier draft of this review recorded
+   "remote only", which was an artefact of the question being asked as a single choice; the
+   site briefly carried that narrower claim and it has been corrected.
 3. **ScrumMaster** — shown as historical, "2023–2025". No longer asserted in the present
    tense anywhere, including JSON-LD.
 4. **Notice** — approximately one month.

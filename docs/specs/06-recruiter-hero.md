@@ -25,8 +25,9 @@ Inside `siteProfile`, immediately after the `location: "Dhaka, Bangladesh",` lin
   // Answers the recruiter's first question - "can I actually hire this person?" -
   // before they have to ask it. Rendered in the hero panel.
   availability: {
-    status: "Remote roles worldwide",
+    status: "Remote worldwide, or on-site in Dhaka",
     base: "Dhaka, Bangladesh (UTC+6)",
+    timezone: "UTC+6",
     overlap: "Full European hours · US East Coast mornings",
     notice: "One month",
   },
@@ -128,7 +129,7 @@ the CTA `<div className="flex flex-wrap gap-3">`:
 
 ```jsx
               <p className="mb-6 text-sm text-slate-600 dark:text-slate-300 md:hidden">
-                {siteProfile.availability.status} · {siteProfile.availability.base} ·{" "}
+                {siteProfile.availability.status} · {siteProfile.availability.timezone} ·{" "}
                 {siteProfile.availability.notice} notice
               </p>
 ```

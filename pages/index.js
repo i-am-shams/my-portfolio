@@ -155,7 +155,7 @@ export default function Home() {
                   a phone - so the same answer gets a one-line form up here, hidden
                   once the two-column layout kicks in and the panel is visible. */}
               <p className="mb-6 text-sm text-slate-600 dark:text-slate-300 md:hidden">
-                {siteProfile.availability.status} · {siteProfile.availability.base} ·{" "}
+                {siteProfile.availability.status} · {siteProfile.availability.timezone} ·{" "}
                 {siteProfile.availability.notice} notice
               </p>
 

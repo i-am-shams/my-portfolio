@@ -418,9 +418,14 @@ contradicted.
 
 **What landed:**
 
-- **Availability is now stated.** `siteProfile.availability` — remote worldwide, Dhaka
-  (UTC+6), time-zone overlap, one month's notice. Rendered as a panel in the hero aside,
-  and as a one-line `md:hidden` form so it clears the fold on a phone too.
+- **Availability is now stated.** `siteProfile.availability` — remote worldwide **or
+  on-site in Dhaka**, UTC+6, time-zone overlap, one month's notice. Rendered as a panel in
+  the hero aside, and as a one-line `md:hidden` form so it clears the fold on a phone too.
+  Note the correction: this first shipped as "remote roles worldwide" only, because the
+  question that established the fact was asked as a single choice and did not allow for
+  both. On-site-in-Dhaka roles were being silently excluded by the site's own copy. When a
+  fact about the person is captured through a multiple-choice question, check that the
+  options are not narrower than reality before writing it into the page.
 - **The `Enterprise Systems Profile` panel is gone.** It was four paragraphs of
   comma-separated technology nouns occupying the most valuable rectangle on the site,
   answering none of the questions a recruiter actually has.

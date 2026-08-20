@@ -28,8 +28,9 @@ export const siteProfile = {
   // Answers the recruiter's first question - "can I actually hire this person?" -
   // before they have to ask it. Rendered in the hero panel.
   availability: {
-    status: "Remote roles worldwide",
+    status: "Remote worldwide, or on-site in Dhaka",
     base: "Dhaka, Bangladesh (UTC+6)",
+    timezone: "UTC+6",
     overlap: "Full European hours · US East Coast mornings",
     notice: "One month",
   },

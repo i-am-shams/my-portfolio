@@ -29,7 +29,7 @@ const rule = () => lines.push("", "-".repeat(72), "");
 lines.push(resume.personalInfo.name.toUpperCase());
 lines.push(resume.personalInfo.title);
 lines.push(`${resume.personalInfo.email} | ${resume.personalInfo.phone}`);
-lines.push("Dhaka, Bangladesh (UTC+6) - open to remote roles worldwide");
+lines.push("Dhaka, Bangladesh (UTC+6) - open to remote roles worldwide, or on-site in Dhaka");
 lines.push("https://khalid-shams.vercel.app | https://github.com/i-am-shams");
 
 rule();

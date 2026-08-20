@@ -303,7 +303,7 @@ test.describe("portfolio smoke tests", () => {
       // wider screens - so take whichever is visible here and require that it, too,
       // clears the fold. Being rendered somewhere down the page is not the point.
       const availability = page
-        .getByText(/Remote roles worldwide/)
+        .getByText(/Remote worldwide, or on-site in Dhaka/)
         .filter({ visible: true })
         .first();
       await expect(availability).toBeVisible();
