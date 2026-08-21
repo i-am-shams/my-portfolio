@@ -579,6 +579,18 @@ Verified with `npm ls brace-expansion` (both paths marked overridden),
   argument. Watch for this class of thing generally: a detail copied from a reference
   carries the reference's meaning with it.
 
+- **`components/Availability.js` is the only place the compact availability line is
+  written.** It had been duplicated as inline markup in `pages/index.js` and `pages/cv.js`,
+  and the two drifted immediately: the homepage version read the `timezone` field, the CV
+  version read `base`, so the CV said *"on-site in Dhaka - Dhaka, Bangladesh (UTC+6)"* and
+  named the city twice in one sentence. The repetition had already been found and fixed on
+  the homepage; it was reintroduced on `/cv` a session later by a spec that did not trace
+  the earlier fix to every place the same copy appears. A smoke test now counts the
+  occurrences of "Dhaka" in the rendered badge on both pages.
+- **It renders as a bordered badge with a status dot, not a bare line of small text.**
+  The first version was a plain `text-sm` paragraph wedged between the summary and the
+  button row, and read as a stray caption rather than a deliberate statement.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put

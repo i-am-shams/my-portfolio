@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import JsonLd from "../components/JsonLd";
 import Layout from "../components/Layout";
+import Availability from "../components/Availability";
 import Section from "../components/Section";
 import BuildProject from "../components/BuildProject";
 import { buildProjects } from "../data/buildProjects";
@@ -154,10 +155,7 @@ export default function Home() {
               {/* The availability panel lives in the aside, which is below the fold on
                   a phone - so the same answer gets a one-line form up here, hidden
                   once the two-column layout kicks in and the panel is visible. */}
-              <p className="mb-6 text-sm text-slate-600 dark:text-slate-300 md:hidden">
-                {siteProfile.availability.status} · {siteProfile.availability.timezone} ·{" "}
-                {siteProfile.availability.notice} notice
-              </p>
+              <Availability className="mb-6 md:hidden" />
 
               <div className="flex flex-wrap gap-3">
                 <a

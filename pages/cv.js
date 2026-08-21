@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import JsonLd from "../components/JsonLd";
 import Layout from "../components/Layout";
+import Availability from "../components/Availability";
 import Section from "../components/Section";
 import SkillCategory from "../components/SkillCategory";
 import resumeData from "../data/resume.json";
@@ -86,10 +87,7 @@ export default function CV() {
                 <p className="mb-5 max-w-4xl text-lg leading-8 text-slate-600 dark:text-slate-300">
                   {resumeData.careerObjective.replace("{{YEARS}}", yearsOfExperience())}
                 </p>
-                <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                  {siteProfile.availability.status} · {siteProfile.availability.base} ·{" "}
-                  {siteProfile.availability.notice} notice
-                </p>
+                <Availability className="mb-6" />
                 <div className="flex flex-wrap gap-3 text-sm font-medium">
                   <a
                     href={`mailto:${resumeData.personalInfo.email}`}

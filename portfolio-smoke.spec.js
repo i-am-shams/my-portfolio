@@ -443,4 +443,30 @@ test.describe("portfolio smoke tests", () => {
 
     await context.close();
   });
+
+  test("availability reads once, without repeating the city", async ({ page }) => {
+    // The compact availability badge previously duplicated markup across the CV
+    // header and the homepage's mobile line, and the two drifted: one read
+    // "on-site in Dhaka - Dhaka, Bangladesh (UTC+6)", naming the city twice in a
+    // single sentence. Both now render components/Availability.
+    for (const path of ["/", "/cv"]) {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(path);
+
+      // The <p> itself, not the inner <span> - getByText resolves to the deepest
+      // node, which would return only the status fragment.
+      const badge = page
+        .locator("p")
+        .filter({ hasText: /Remote worldwide, or on-site in Dhaka/ })
+        .filter({ visible: true })
+        .first();
+      await expect(badge).toBeVisible();
+
+      const text = await badge.innerText();
+      const dhakaMentions = (text.match(/Dhaka/g) ?? []).length;
+      expect(dhakaMentions, `"${text}" names Dhaka ${dhakaMentions} times`).toBe(1);
+      expect(text).toContain("UTC+6");
+      expect(text).toMatch(/notice/i);
+    }
+  });
 });
