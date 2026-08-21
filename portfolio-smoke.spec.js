@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { siteProfile } from "./data/profile";
 
 test.describe("portfolio smoke tests", () => {
   test("homepage presents senior enterprise positioning", async ({ page }) => {
@@ -468,5 +469,24 @@ test.describe("portfolio smoke tests", () => {
       expect(text).toContain("UTC+6");
       expect(text).toMatch(/notice/i);
     }
+  });
+
+  test("target roles render from profile.js, not a second hardcoded list", async ({
+    page,
+  }) => {
+    // siteProfile.roleTargets used to be defined and never read, while pages/cv.js
+    // rendered its own copy - so the canonical list was dead data and the two had
+    // drifted to different lengths. Importing the data here means the test fails if
+    // anyone reintroduces a local copy that disagrees.
+    await page.goto("/cv");
+
+    const section = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Target Roles" }) });
+
+    for (const role of siteProfile.roleTargets) {
+      await expect(section.getByText(role, { exact: true })).toBeVisible();
+    }
+    await expect(section.locator("li")).toHaveCount(siteProfile.roleTargets.length);
   });
 });

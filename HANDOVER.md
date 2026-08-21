@@ -591,6 +591,20 @@ Verified with `npm ls brace-expansion` (both paths marked overridden),
   The first version was a plain `text-sm` paragraph wedged between the summary and the
   button row, and read as a stray caption rather than a deliberate statement.
 
+- **`siteProfile.roleTargets` is now actually read.** It had been defined in
+  `data/profile.js` and used nowhere, while `pages/cv.js` rendered its own hardcoded copy -
+  so the canonical list was dead data shipping in the bundle, and the two had drifted to
+  different lengths (6 vs 5). `/cv` reads the profile now, and a smoke test imports
+  `siteProfile` directly so reintroducing a local copy fails.
+- **"Engineering Manager" was dropped rather than promoted.** It existed only in the dead
+  copy, so it had never been publicly visible. Ten years of delivery-management titles are
+  the exact reading this site works to counterbalance; advertising a management target
+  reinforces it. One line in `data/profile.js` to add back if that trade changes.
+- **Target Roles is a `<ul aria-label>` now, not a div of spans** - it is a list, screen
+  readers should announce it as one, and it matches the tech-pill pattern in
+  `components/BuildProject.js`. The same span-chip markup is still used for Enterprise
+  Domains and the skill pills on `/cv`; worth the same treatment next time those are touched.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put

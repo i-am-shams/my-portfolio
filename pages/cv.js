@@ -15,14 +15,6 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 
-const roleTargets = [
-  "Senior Software Engineer",
-  "Technical Lead",
-  "Solution Architect",
-  "Enterprise Application Specialist",
-  "Reporting Systems Engineer",
-];
-
 const proofMetrics = [
   `${yearsOfExperience()}+ years enterprise software engineering`,
   "30+ member cross-functional delivery leadership",
@@ -137,16 +129,19 @@ export default function CV() {
           </section>
 
           <Section title="Target Roles">
-            <div className="flex flex-wrap gap-2">
-              {roleTargets.map((role) => (
-                <span
+            {/* A list of roles, marked up as one - a screen reader announces the
+                count, and it matches the <ul aria-label> pattern used for the tech
+                pills in components/BuildProject.js. */}
+            <ul className="flex flex-wrap gap-2" aria-label="Target roles">
+              {siteProfile.roleTargets.map((role) => (
+                <li
                   key={role}
                   className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800 dark:bg-blue-950 dark:text-blue-200 print:rounded-none print:bg-transparent print:px-0 print:py-0 print:text-xs print:font-normal"
                 >
                   {role}
-                </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </Section>
 
           <Section title="Enterprise Domains">

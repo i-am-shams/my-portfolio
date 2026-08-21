@@ -40,10 +40,17 @@ export const siteProfile = {
   certification: "Certified ScrumMaster (2023-2025)",
   summary:
     `Senior enterprise software engineer and solution architect with ${yearsOfExperience()}+ years of experience in .NET, reporting platforms, analytics dashboards, ERP systems, cloud-enabled architecture, SCADA/GIS integration, and technical delivery leadership.`,
+  // The single source for the Target Roles list on /cv. It used to be defined here
+  // and never read, while pages/cv.js rendered its own hardcoded copy - so this list
+  // was dead data and the two had already drifted apart.
+  //
+  // "Engineering Manager" was in the dead copy and is deliberately not restored:
+  // ten years of delivery-management titles are already the thing this site works to
+  // counterbalance, and advertising a management target reinforces the reading we
+  // are arguing against. One line to add back if that trade changes.
   roleTargets: [
     "Senior Software Engineer",
     "Technical Lead",
-    "Engineering Manager",
     "Solution Architect",
     "Enterprise Application Specialist",
     "Reporting Systems Engineer",
