@@ -507,6 +507,53 @@ schemes, not after hydration. Toggle, persistence and reload all still work. The
 test asserts first-frame colour and an empty hydration-error list, and was mutation-tested by
 deleting the blocking script — it fails.
 
+## Session 10 — the Word resume is generated now, not hand-maintained
+
+`Khalid_Shams_Resume_DRAFT.docx` had drifted badly from the site it is supposed to mirror:
+it claimed "two self-built systems" when there were three, listed two projects, and still
+carried the management-first experience bullets that `data/resume.json` moved past in
+Session 7. It was also **12 MB**, of which **11.56 MB was a single 3024x4032 raw phone
+photo** — the direct cause of the 2 MB exported PDF that `docs/recruiter-review.md` flagged
+as an ATS risk.
+
+**What landed:**
+
+- **`scripts/build_resume_docx.py`** renders the Word resume from `data/resume.json`, so the
+  `.docx`, `/cv`, and `public/resume.txt` cannot disagree again. Output is **40 KB**, roughly
+  1.6 pages.
+- **`data/resume.json` gained a `projects` array** — three projects with metric-led bullets
+  (127k lines of C#, 167 tests, seven containers, the fanout decision, server-recomputed
+  pricing). This is now the single source for the docx, the txt, and `/cv`.
+- **`pages/cv.js` no longer holds its own `selectedProjects` constant.** That was a second
+  hardcoded list with weaker copy and it was the same drift risk the docx just demonstrated.
+  `/cv` now renders `resumeData.projects` with bullets and stack, and shows availability.
+- **Summary rewritten** to lead with the leadership metrics and then the three systems built
+  single-handedly.
+- **Skills extended** with what the portfolio already evidences but the resume never listed:
+  Terraform, MongoDB Atlas, Google Gemini API, and a new Observability group.
+
+**Things worth knowing next time:**
+
+- **The generated file is `Khalid_Shams_Resume_v2.docx`, written alongside the original.**
+  The 12 MB draft was deliberately not overwritten — it is the user's hand-edited master and
+  untracked. Compare, then replace when satisfied.
+- **No photo by default.** For US/UK/Canada/Australia applications a photo on a CV is a
+  liability; many employers must discard photo CVs on discrimination-compliance grounds. Pass
+  `--photo path.jpg` for a local Dhaka variant — it downscales to 220px regardless.
+- **Education has no years** in `data/resume.json` (`year: null` on all three entries), so
+  those rows render with no date. The generator now suppresses the tab stop rather than
+  leaving a dangling one, but the years are still missing and only the user can supply them.
+- **The docx could not be visually verified in this environment** — no LibreOffice and no
+  Word COM available. Structure, bullet counts, dangling tabs, encoding and estimated page
+  count were checked programmatically, but nobody has looked at the rendered page. Open it
+  before sending it anywhere.
+- **Two of three generator fixes silently failed first time** because `.replace()` was used
+  without an assert and a `	` escape mismatched through the heredoc. Same class of error as
+  the earlier spec-file escaping breakages. Assert on every replacement.
+- **A `?` in console output is not evidence of an encoding bug.** The Windows terminal
+  mangles em dashes and `(R)`; the file itself had zero U+FFFD replacement characters. Check
+  the bytes before "fixing" an encoding problem that does not exist.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
@@ -538,7 +585,7 @@ deleting the blocking script — it fails.
 | Header/footer links, dark mode | `components/Layout.js` for the toggle and the icon — but the theme is applied by the blocking script in `pages/_document.js` before paint, and `Layout` only reads `<html>`'s class back via `useSyncExternalStore`. Never move theme detection into render; that was the Session 9 bug. |
 | Name, email, GitHub/LinkedIn URLs, SEO metadata | `data/profile.js` |
 | Smoke-test coverage | `portfolio-smoke.spec.js` |
-| Resume PDF content | **Manual now, not generated.** `public/Khalid_Shams_Resume.pdf` is a hand-exported PDF from `Khalid_Shams_Resume_DRAFT.docx` (repo root, untracked). Edit the `.docx` in Word/LibreOffice, export to PDF, drop it in `public/`. The `print:` CSS overrides in `pages/cv.js` / `components/Section.js` / `components/SkillCategory.js` / `styles/globals.css` still exist and still work for the CV *web page's* own print button, but are no longer how the downloadable PDF gets made. |
+| Resume PDF content | **Generated again.** Run `python scripts/build_resume_docx.py` (reads `data/resume.json`), then export to PDF from Word and drop it in `public/`. Edit `data/resume.json`, never the `.docx` directly - hand-edits are how it drifted before. |
 | Favicon | `public/favicon.svg` (source of truth) + `public/favicon.ico` (hand-built multi-res fallback) + cache-busting version in `pages/_document.js` |
 | Years of experience ("N+ years") | `yearsOfExperience()` in `data/profile.js` — computed from a fixed start date, not hardcoded anywhere. Change the start date there if it's ever wrong, not the individual strings. |
 | Self-built project list | `data/buildProjects.js`, rendered by `components/BuildProject.js` — same pattern for a 4th project as the existing 3. |

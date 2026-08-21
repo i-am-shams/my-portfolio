@@ -6,7 +6,7 @@
     "email": "i.am.shams@gmail.com",
     "photo": "/avatar.png"
   },
-  "careerObjective": "Enterprise software engineering leader with {{YEARS}}+ years of experience designing, delivering, and modernizing business-critical systems across utilities, ERP, financial analytics, OCR, reporting, and operational management domains. Strong background in .NET, ASP.NET Core, React, Angular, SQL Server, REST APIs, microservices, Azure/AWS, SCADA integration, GIS integration, dashboards, and cross-functional technical leadership.",
+  "careerObjective": "Enterprise software engineer and solution architect with {{YEARS}}+ years across .NET, ERP, reporting, and SCADA-integrated platforms for utilities and industrial operations. Led delivery of systems serving 100k+ users and 1M+ monthly transactions with a 30+ engineer and QA team, cutting manual reporting effort by 65%. Now designs, builds, deploys, and operates three commercial systems in production single-handedly - a multi-tenant SaaS, an event-driven AI pipeline, and a storefront platform - covering architecture, containerised deployment, observability, and on-call.",
   "experience": [
     {
       "position": "Solution Delivery Specialist",
@@ -109,42 +109,135 @@
       "year": null
     }
   ],
-
   "technicalSkills": [
     {
       "category": "Languages & Frameworks",
-      "items": ["C#", "ASP.NET Core", "ASP.NET", "Blazor Server", "MVC", "ADO.NET", "WCF", "Node.js", "TypeScript", "JavaScript/ES6", "HTML5", "CSS3"]
+      "items": [
+        "C#",
+        "ASP.NET Core",
+        "ASP.NET",
+        "Blazor Server",
+        "MVC",
+        "ADO.NET",
+        "WCF",
+        "Node.js",
+        "TypeScript",
+        "JavaScript/ES6",
+        "HTML5",
+        "CSS3"
+      ]
     },
     {
       "category": "Frontend",
-      "items": ["React.js", "Next.js", "Angular", "Blazor", "Tailwind CSS", "TanStack Query", "Material-UI", "Bootstrap", "jQuery"]
+      "items": [
+        "React.js",
+        "Next.js",
+        "Angular",
+        "Blazor",
+        "Tailwind CSS",
+        "TanStack Query",
+        "Material-UI",
+        "Bootstrap",
+        "jQuery"
+      ]
     },
     {
       "category": "Databases & ORM",
-      "items": ["PostgreSQL", "MS SQL Server", "Oracle", "MySQL", "MongoDB", "Entity Framework Core", "Entity Framework", "Dapper", "NHibernate"]
+      "items": [
+        "PostgreSQL",
+        "MS SQL Server",
+        "Oracle",
+        "MySQL",
+        "MongoDB",
+        "Entity Framework Core",
+        "Entity Framework",
+        "Dapper",
+        "NHibernate"
+      ]
     },
     {
       "category": "Messaging & Real-Time",
-      "items": ["RabbitMQ", "SignalR", "Event-Driven Architecture", "Background Workers", "WebSockets"]
+      "items": [
+        "RabbitMQ",
+        "SignalR",
+        "Event-Driven Architecture",
+        "Background Workers",
+        "WebSockets"
+      ]
     },
     {
       "category": "Architecture & Patterns",
-      "items": ["Clean Architecture", "Multi-Tenant SaaS", "Microservices", "RESTful API", "Web API", "SOAP", "Repository", "Factory", "Singleton"]
+      "items": [
+        "Clean Architecture",
+        "Multi-Tenant SaaS",
+        "Microservices",
+        "RESTful API",
+        "Web API",
+        "SOAP",
+        "Repository",
+        "Factory",
+        "Singleton"
+      ]
     },
     {
       "category": "Testing & Quality",
-      "items": ["xUnit", "NUnit", "MSTest", "Playwright", "Vitest", "React Testing Library", "Postman", "Fiddler"]
+      "items": [
+        "xUnit",
+        "NUnit",
+        "MSTest",
+        "Playwright",
+        "Vitest",
+        "React Testing Library",
+        "Postman",
+        "Fiddler"
+      ]
     },
     {
       "category": "DevOps & Infrastructure",
-      "items": ["Docker", "Docker Compose", "GitHub Actions", "Azure DevOps", "Jenkins", "nginx", "Linux VPS Operations", "Let's Encrypt / TLS", "Git", "TFS", "SVN", "NPM", "Webpack"]
+      "items": [
+        "Docker",
+        "Docker Compose",
+        "Terraform",
+        "GitHub Actions",
+        "Azure DevOps",
+        "Jenkins",
+        "nginx",
+        "Linux VPS Operations",
+        "Let's Encrypt / TLS",
+        "Git",
+        "TFS",
+        "SVN",
+        "NPM",
+        "Webpack"
+      ]
     },
     {
       "category": "Cloud & Services",
-      "items": ["Azure Services", "AWS Lambda", "Serverless Architecture", "Self-Hosted Production Deployment"]
+      "items": [
+        "Azure Services",
+        "AWS Lambda",
+        "Serverless Architecture",
+        "Self-Hosted Production Deployment",
+        "MongoDB Atlas",
+        "Google Gemini API"
+      ]
+    },
+    {
+      "category": "Observability",
+      "items": [
+        "Grafana Cloud",
+        "Grafana Alloy",
+        "Structured Logging",
+        "Liveness / Readiness Probes",
+        "Container Healthchecks"
+      ]
     }
   ],
-  "management": ["Project Planning", "Team Leadership", "Client Communication"],
+  "management": [
+    "Project Planning",
+    "Team Leadership",
+    "Client Communication"
+  ],
   "certifications": [
     {
       "name": "Certified ScrumMaster®",
@@ -153,7 +246,51 @@
     }
   ],
   "languages": [
-    { "language": "Bengali", "proficiency": "Native" },
-     { "language": "English", "proficiency": "Fluent" }
+    {
+      "language": "Bengali",
+      "proficiency": "Native"
+    },
+    {
+      "language": "English",
+      "proficiency": "Fluent"
+    }
+  ],
+  "projects": [
+    {
+      "name": "DentalPMS",
+      "tagline": "Multi-tenant SaaS practice management for dental clinics",
+      "url": "https://demo.dentflowbd.com/login",
+      "repo": null,
+      "bullets": [
+        "Designed, built, deployed, and operate a commercial platform with paying clinics on it: 127k lines of C#, 41 domain entities, 167 automated tests, 33 EF Core migrations.",
+        "Enforced tenant isolation structurally through EF Core global query filters at the DbContext, so a cross-tenant query cannot be written by accident rather than relying on developer discipline.",
+        "Clean Architecture across four projects; Blazor Server UI over 81 components on PostgreSQL; JWT in HttpOnly cookies with policy-based authorization; nginx on a Linux VPS with per-clinic custom domains and 13 written runbooks."
+      ],
+      "stack": "ASP.NET Core 8 · Blazor Server · C# · PostgreSQL · EF Core · Docker · nginx · xUnit · Playwright"
+    },
+    {
+      "name": "AI Job-Search Copilot",
+      "tagline": "Event-driven AI matching pipeline with a polyglot microservice",
+      "url": "https://jobcopilot.dentflowbd.com",
+      "repo": "https://github.com/i-am-shams/ai-jobsearch-copilot",
+      "bullets": [
+        "Built and operate a seven-container distributed system across two bounded contexts, with GitHub Actions building four images and deploying on push.",
+        "Replaced a shared RabbitMQ queue with a fanout exchange after determining a second consumer would have silently round-robined away half of all live SignalR pushes; verified against per-queue message stats before and after.",
+        "Added a Node.js/TypeScript notifications service on its own MongoDB Atlas cluster, adopted under Terraform by import rather than re-creation, with Grafana Alloy shipping metrics and logs to Grafana Cloud."
+      ],
+      "stack": "ASP.NET Core 8 · RabbitMQ · SignalR · React · TypeScript · Node.js · MongoDB Atlas · Terraform · Grafana Cloud · Docker Compose · GitHub Actions"
+    },
+    {
+      "name": "One-Page Commerce",
+      "tagline": "Single-product Cash-on-Delivery storefront platform",
+      "url": "https://one-page-commerce.vercel.app/",
+      "repo": null,
+      "bullets": [
+        "Built and operate a commercial storefront platform with live stores selling through it, including an admin panel a non-developer can run unsupervised.",
+        "Recompute every checkout price, discount, and delivery fee server-side from the database, so a client-posted total is never trusted.",
+        "Next.js App Router with route-group separation and a tenant-scoped PostgreSQL schema, serving both single-tenant and pooled multi-tenant deployments from one codebase."
+      ],
+      "stack": "Next.js (App Router) · TypeScript · PostgreSQL · Tailwind CSS · Docker Compose"
+    }
   ]
 }

@@ -38,6 +38,16 @@ lines.push("");
 lines.push(resume.careerObjective.replaceAll("{{YEARS}}", String(years)));
 
 rule();
+lines.push("SELECTED PROJECTS");
+for (const project of resume.projects) {
+  lines.push("");
+  lines.push(`${project.name} - ${project.tagline}`);
+  lines.push(`  ${project.url}${project.repo ? ` | ${project.repo}` : ""}`);
+  for (const item of project.bullets) lines.push(`  - ${item}`);
+  lines.push(`  Stack: ${project.stack}`);
+}
+
+rule();
 lines.push("EXPERIENCE");
 for (const role of resume.experience) {
   lines.push("");

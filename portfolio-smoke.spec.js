@@ -125,8 +125,23 @@ test.describe("portfolio smoke tests", () => {
 
     await expect(page.getByRole("heading", { name: "Selected Projects" })).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "DentalPMS — Live demo" }),
+      page.getByRole("link", { name: "DentalPMS — live" }),
     ).toHaveAttribute("href", "https://demo.dentflowbd.com/login");
+
+    // All three projects, rendered from data/resume.json rather than a second
+    // hardcoded list that would drift - which is what the .docx did.
+    for (const name of ["DentalPMS", "AI Job-Search Copilot", "One-Page Commerce"]) {
+      await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+    }
+
+    // The metrics are the reason this section exists at all; weak blurbs were
+    // what it carried before.
+    await expect(page.getByText(/127k lines of C#/)).toBeVisible();
+    await expect(page.getByText(/seven-container distributed system/)).toBeVisible();
+    await expect(page.getByText(/recomputed? every checkout price|Recompute every checkout price/i).first()).toBeVisible();
+
+    // Only the Copilot is public, so it is the only Source link.
+    await expect(page.getByRole("link", { name: /— source$/i })).toHaveCount(1);
 
     // Skills must reflect what is actually used now, and must not date the CV.
     await expect(page.getByText("PostgreSQL").first()).toBeVisible();

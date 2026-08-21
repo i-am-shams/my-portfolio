@@ -39,32 +39,6 @@ const enterpriseDomains = [
   "Operational Dashboards",
 ];
 
-const selectedProjects = [
-  {
-    name: "DentalPMS",
-    blurb:
-      "Multi-tenant SaaS practice management system for dental clinics. Clean Architecture on ASP.NET Core and Blazor Server, with tenant isolation enforced by EF Core global query filters. Designed, built, deployed, and operated in production.",
-    url: "https://demo.dentflowbd.com/login",
-    linkLabel: "Live demo",
-    tech: "ASP.NET Core 8 · Blazor Server · PostgreSQL · EF Core · Docker · nginx",
-  },
-  {
-    name: "AI Job-Search Copilot",
-    blurb:
-      "Event-driven résumé-to-job matching pipeline. An ASP.NET Core API queues work to RabbitMQ, a background worker calls an AI model and persists results, and completions are pushed back to the browser over SignalR. Containerized, with CI/CD deploying on push.",
-    url: "https://jobcopilot.dentflowbd.com",
-    linkLabel: "Live app",
-    tech: "ASP.NET Core 8 · RabbitMQ · SignalR · PostgreSQL · React · Docker · GitHub Actions",
-  },
-  {
-    name: "One-Page Commerce",
-    blurb:
-      "Single-product Cash-on-Delivery storefront with an admin panel a non-developer can operate unsupervised. Next.js App Router on PostgreSQL, with checkout pricing always recomputed server-side and tenant-scoped data so one deployment can serve a single store or many.",
-    url: "https://one-page-commerce.vercel.app/",
-    linkLabel: "Live app",
-    tech: "Next.js (App Router) · TypeScript · PostgreSQL · Tailwind CSS · Docker Compose",
-  },
-];
 
 export default function CV() {
   const profileTitle = `${siteProfile.uppercaseName} | ${siteProfile.title}`;
@@ -111,6 +85,10 @@ export default function CV() {
                 </h1>
                 <p className="mb-5 max-w-4xl text-lg leading-8 text-slate-600 dark:text-slate-300">
                   {resumeData.careerObjective.replace("{{YEARS}}", yearsOfExperience())}
+                </p>
+                <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
+                  {siteProfile.availability.status} · {siteProfile.availability.base} ·{" "}
+                  {siteProfile.availability.notice} notice
                 </p>
                 <div className="flex flex-wrap gap-3 text-sm font-medium">
                   <a
@@ -188,31 +166,45 @@ export default function CV() {
 
           <Section title="Selected Projects">
             <div className="space-y-6 print:space-y-2">
-              {selectedProjects.map((project) => (
+              {resumeData.projects.map((project) => (
                 <article
                   key={project.name}
                   className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 print:rounded-none print:border-0 print:bg-transparent print:shadow-none print:p-0"
                 >
-                  <h3 className="text-xl font-semibold text-slate-950 dark:text-white mb-3">
+                  <h3 className="mb-1 text-xl font-semibold text-slate-950 dark:text-white">
                     {project.name}
                   </h3>
-                  <p className="mb-3 text-slate-600 dark:text-slate-300">
+                  <p className="mb-3 text-slate-600 dark:text-slate-300">{project.tagline}</p>
+                  <p className="mb-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                     <a
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${project.name} — ${project.linkLabel}`}
+                      aria-label={`${project.name} — live`}
                       className="font-medium text-blue-700 hover:underline dark:text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950 rounded"
                     >
-                      {project.linkLabel}
+                      Live
                     </a>
+                    {project.repo && (
+                      <a
+                        href={project.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.name} — source`}
+                        className="font-medium text-blue-700 hover:underline dark:text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950 rounded"
+                      >
+                        Source
+                      </a>
+                    )}
                   </p>
-                  <p className="mb-3 text-slate-600 dark:text-slate-300">
-                    {project.blurb}
-                  </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    {project.tech}
-                  </p>
+                  <ul className="mb-3 space-y-2 text-slate-600 dark:text-slate-300">
+                    {project.bullets.map((item) => (
+                      <li key={item} className="border-l-2 border-blue-500 pl-3 print:border-0 print:pl-0">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{project.stack}</p>
                 </article>
               ))}
             </div>
