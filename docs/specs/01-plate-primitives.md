@@ -139,14 +139,20 @@ spaced fractions of `h`.
 - each divider `<line>`: from `(x, y + h * i / cells)` to `(x + w, y + h * i / cells)` for
   `i` in `1..cells-1`, same stroke and dasharray
 
-### `Actor({ cx, cy, r = 26 })`
+### `Actor({ cx, cy, r = 26, mood = 'neutral' })`
 
 - `<circle>` `fill="none"`, `stroke={plateTokens.ink}`, `strokeWidth={STROKE}`
 - left eye: `<circle cx={cx - r * 0.32} cy={cy - r * 0.22} r="2.6" fill={plateTokens.ink} />`
 - right eye: same with `cx={cx + r * 0.32}`
 - mouth: `<path>` `fill="none"` `stroke={plateTokens.ink}` `strokeWidth={STROKE}`
-  `strokeLinecap="round"`, `d = "M {cx - r*0.34} {cy + r*0.42} Q {cx} {cy + r*0.16} {cx + r*0.34} {cy + r*0.42}"`
-  (an upward-curving arc — the sample's client is unhappy about the monolith)
+  `strokeLinecap="round"`, with `d` chosen by `mood`:
+  - `'neutral'` (default) — a flat line,
+    `"M {cx - r*0.3} {cy + r*0.34} L {cx + r*0.3} {cy + r*0.34}"`
+  - `'unhappy'` — an upward-curving arc,
+    `"M {cx - r*0.34} {cy + r*0.42} Q {cx} {cy + r*0.16} {cx + r*0.34} {cy + r*0.42}"`
+
+  Neutral is the default on purpose. A frown is an editorial claim about the user's
+  experience and belongs only in a before-state that is arguing exactly that.
 
 ### `Router({ cx, cy, half = 38 })`
 

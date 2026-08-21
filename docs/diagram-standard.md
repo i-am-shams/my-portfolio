@@ -102,7 +102,7 @@ table first, with a stated meaning — not an ad-hoc `<path>`.
 | Primitive | Drawn as | Means |
 |---|---|---|
 | `GroupBox` | dashed rect, optional dashed internal dividers | one deployable unit, or a before-state being taken apart |
-| `Actor` | circle, two dot eyes, arc mouth | a human or an external client |
+| `Actor` | circle, two dot eyes, flat mouth | a human or an external client. `mood="unhappy"` draws a frown — use it only where the person's dissatisfaction *is* the argument, never as decoration |
 | `Router` | diamond | a dispatch point — load balancer, exchange, gateway, filter |
 | `Instance` | **solid** ink rect with three ground-coloured bars | a running compute process |
 | `Store` | cylinder | a datastore |

@@ -38,7 +38,17 @@ export function GroupBox({ x, y, w, h, cells = 1 }) {
   );
 }
 
-export function Actor({ cx, cy, r = 26 }) {
+/**
+ * A human or external client. Neutral by default.
+ *
+ * `mood="unhappy"` draws a frown, and is only correct when the person's
+ * dissatisfaction is the thing the figure is arguing about - a before-state where
+ * the current design is failing them. It was previously the unconditional default,
+ * copied from the reference figure where the client really was unhappy with the
+ * monolith, which left a sad user standing in the middle of a topology plate whose
+ * whole point is that the system works.
+ */
+export function Actor({ cx, cy, r = 26, mood = 'neutral' }) {
   return (
     <>
       <circle
@@ -66,7 +76,11 @@ export function Actor({ cx, cy, r = 26 }) {
         stroke={plateTokens.ink}
         strokeWidth={STROKE}
         strokeLinecap="round"
-        d={`M ${cx - r * 0.34} ${cy + r * 0.42} Q ${cx} ${cy + r * 0.16} ${cx + r * 0.34} ${cy + r * 0.42}`}
+        d={
+          mood === 'unhappy'
+            ? `M ${cx - r * 0.34} ${cy + r * 0.42} Q ${cx} ${cy + r * 0.16} ${cx + r * 0.34} ${cy + r * 0.42}`
+            : `M ${cx - r * 0.3} ${cy + r * 0.34} L ${cx + r * 0.3} ${cy + r * 0.34}`
+        }
       />
     </>
   );

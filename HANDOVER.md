@@ -570,6 +570,15 @@ known-safe brace-expansion pins instead of only the broad parent ranges
 Verified with `npm ls brace-expansion` (both paths marked overridden),
 `npm audit`, `npm run lint`, and `npm run build`.
 
+- **`Actor` is neutral-faced by default, and that is deliberate.** The frown was copied
+  wholesale from the reference figure, where the client genuinely was unhappy with the
+  monolith the diagram was arguing against. Baking it into the primitive put a sad user in
+  the middle of a topology plate whose entire point is that the system works - an editorial
+  claim nobody meant to make, on the one figure a hiring manager reads as "here is my
+  production system". Pass `mood="unhappy"` only where the person's dissatisfaction *is* the
+  argument. Watch for this class of thing generally: a detail copied from a reference
+  carries the reference's meaning with it.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
