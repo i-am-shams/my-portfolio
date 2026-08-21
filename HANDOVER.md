@@ -554,6 +554,22 @@ as an ATS risk.
   mangles em dashes and `(R)`; the file itself had zero U+FFFD replacement characters. Check
   the bytes before "fixing" an encoding problem that does not exist.
 
+## Session 11 — pinned brace-expansion transitive paths for CVE-2026-13149 scanners
+
+Checked CVE-2026-13149 / GHSA-3jxr-9vmj-r5cp. The patched `brace-expansion`
+floors are `1.1.16`, `2.1.2`, and `5.0.7`. This repo was already resolving
+safe versions: `brace-expansion@1.1.18` through ESLint's `minimatch@3.1.5`
+path, and `brace-expansion@5.0.9` through the `typescript-eslint` /
+`minimatch@10.2.5` path. `npm audit` also reported zero vulnerabilities.
+
+Still added explicit npm `overrides` in `package.json` for those two
+transitive minimatch paths, so future installs and package scanners see the
+known-safe brace-expansion pins instead of only the broad parent ranges
+(`^1.1.7` and `^5.0.5`).
+
+Verified with `npm ls brace-expansion` (both paths marked overridden),
+`npm audit`, `npm run lint`, and `npm run build`.
+
 ## How the work was actually produced
 
 - **Copy, positioning, and architecture decisions (what to say, where to put
