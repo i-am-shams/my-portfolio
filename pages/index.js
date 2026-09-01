@@ -299,6 +299,13 @@ export default function Home() {
               <p className="max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
                 Enterprise delivery is one kind of evidence; a system you can open in a browser is another. All three were designed, built, deployed, and operated end to end, and all three are running in production right now.
               </p>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-500 dark:text-slate-400">
+                Technical findings from a separate project live on the{" "}
+                <Link href="/notes" className="underline underline-offset-2 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:hover:text-blue-300">
+                  Notes
+                </Link>
+                {" "}page.
+              </p>
               {buildProjects.map((project) => (
                 <BuildProject key={project.slug} project={project} />
               ))}

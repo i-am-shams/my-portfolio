@@ -106,6 +106,12 @@ export default function Layout({ children }) {
               Case Study
             </Link>
             <Link
+              href="/notes"
+              className="hidden text-sm font-medium text-slate-600 transition-colors hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-slate-300 dark:hover:text-blue-300 sm:inline"
+            >
+              Notes
+            </Link>
+            <Link
               href="/cv"
               className="text-sm font-medium text-slate-600 transition-colors hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-slate-300 dark:hover:text-blue-300"
             >
