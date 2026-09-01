@@ -121,7 +121,7 @@ export default function BuildProject({ project }) {
             alt={project.screenshot.alt}
             width={project.screenshot.width}
             height={project.screenshot.height}
-            className="h-auto w-full rounded-2xl border border-slate-200 bg-white dark:border-slate-700"
+            className="h-auto w-full rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:brightness-[0.85]"
           />
           <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">
             {project.screenshot.caption}
