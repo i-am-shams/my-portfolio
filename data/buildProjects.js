@@ -109,12 +109,7 @@ export const buildProjects = [
     repoUrl: "https://github.com/i-am-shams/ai-jobsearch-copilot",
     sourceNote: null,
     demo: null,
-    stats: [
-      { value: "7", label: "Containers in production" },
-      { value: "2", label: "Bounded contexts" },
-      { value: "3", label: "Environments verified" },
-      { value: "4", label: "CI/CD images built" },
-    ],
+    stats: null,
     diagram: {
       plate: "fanout",
       title:

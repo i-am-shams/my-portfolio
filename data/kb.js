@@ -2,8 +2,7 @@ export const kbEntries = [
   {
     slug: "purge",
     category: ["Azure", "Pipeline"],
-    title:
-      "A conditional that has never been true is untested by any number of green runs",
+    title: "A pipeline step eleven green runs never reached",
     context:
       "Deleting an Azure resource group soft-deletes an API Management service for 48 hours and holds its name. Recreating with the same name fails with 'service name is not available' — which reads like a naming collision, not a deletion artefact. The pipeline had a step to purge any soft-deleted instance before provisioning ran.",
     mechanism:
@@ -15,8 +14,7 @@ export const kbEntries = [
   {
     slug: "silent-overcharge",
     category: ["Testing"],
-    title:
-      "Automated tests tell you the code does what you told it to — they don't tell you the product works",
+    title: "A green suite, a silent €11.25 charge",
     context:
       "A coupon code entered before signing in was not persisted across the sign-in redirect. A user who applied a valid coupon, signed in to submit, and returned found the coupon gone. The order was placed at full price with no message. On a €75 basket, that silently costs the customer €11.25. The full test suite was green.",
     mechanism:
@@ -28,8 +26,7 @@ export const kbEntries = [
   {
     slug: "false-rejection",
     category: ["React", "Auth"],
-    title:
-      "When you infer state from a correlated condition, you inherit every other situation where that condition is also true",
+    title: "The coupon field that rejected its first letter",
     context:
       "After a sign-in redirect on a coupon service, an effect needed to restore the coupon preview. It needed to know whether the page had just returned from a redirect, and had no direct signal, so it tested a correlated condition instead: menu loaded, basket has lines, coupon code present.",
     mechanism:
@@ -41,8 +38,7 @@ export const kbEntries = [
   {
     slug: "in-memory-provider",
     category: ["EF Core", "Testing"],
-    title:
-      "A test double that silently lacks the capability under test gives you a green suite that proves nothing",
+    title: "The in-memory provider that can't run transactions",
     context:
       "Tests on a coupon service ran against the EF Core in-memory provider. Coupon redemption depended on `ExecuteUpdateAsync` and transactions — exactly the two mechanisms that enforced the core concurrency invariant.",
     mechanism:
@@ -54,8 +50,7 @@ export const kbEntries = [
   {
     slug: "sql-sid",
     category: ["Azure", "SQL"],
-    title:
-      "The identifier that works in one Azure service is not necessarily the one another expects",
+    title: "Client ID, not object ID",
     context:
       "Granting a managed identity access to Azure SQL from a pipeline. The normal path — `CREATE USER [name] FROM EXTERNAL PROVIDER` — requires the SQL Server to hold the Directory Readers role in Entra, which is a tenant-admin grant and cannot be provisioned from an application pipeline.",
     mechanism:
@@ -67,8 +62,7 @@ export const kbEntries = [
   {
     slug: "apim-tier-limit",
     category: ["Azure", "API Management"],
-    title:
-      "When a platform feature is missing at a tier, check whether the reason is architectural before assuming it's commercial",
+    title: "Why the Consumption tier can't rate-limit by key",
     context:
       "`rate-limit-by-key` is not supported on the Azure API Management Consumption tier.",
     mechanism:
